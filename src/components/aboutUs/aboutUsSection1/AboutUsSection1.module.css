@@ -1,0 +1,222 @@
+.mainContainer {
+    width: 100%;
+    padding: 48px;
+}
+
+.container {
+    max-width: 100rem;
+    margin: auto;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+}
+
+.sec_title {
+    position: relative;
+    z-index: 1;
+    margin-bottom: 60px;
+}
+
+.sec_title .title {
+    position: relative;
+    display: block;
+    font-size: 18px;
+    line-height: 24px;
+    color: #ff2222;
+    font-weight: 500;
+    margin-bottom: 15px;
+}
+
+.sec_title h2 {
+    position: relative;
+    display: block;
+    font-size: 40px;
+    line-height: 1.28em;
+    color: #222222;
+    font-weight: 600;
+    padding-bottom: 18px;
+}
+
+.sec_title h2:before {
+    position: absolute;
+    content: '';
+    left: 0px;
+    bottom: 0px;
+    width: 50px;
+    height: 3px;
+    background-color: #d1d2d6;
+}
+
+.list_items {
+    display: flex;
+    flex-direction: column;
+    list-style: none;
+    gap: 20px;
+}
+.list_items>div {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.list_items li {
+    font-size: 16px;
+    line-height: 26px;
+    color: #222222;
+    font-weight: 400;
+    padding-left: 35px;
+}
+
+.list_items .list_icon {
+    font-size: 18px;
+    padding: 0px;
+    color: #04922e;
+}
+
+.list_items li a:hover {
+    color: #44bce2;
+}
+
+.btn_style_one {
+    position: relative;
+    display: inline-block;
+    font-size: 17px;
+    line-height: 30px;
+    color: #ffffff;
+    padding: 10px 30px;
+    font-weight: 600;
+    overflow: hidden;
+    letter-spacing: 0.02em;
+    background-color: #ff2222;
+}
+
+.btn_style_one:hover {
+    background-color: #001e57;
+    color: #ffffff;
+}
+
+.about_section {
+    position: relative;
+    padding: 120px 0 70px;
+}
+
+.sec_title {
+    margin-bottom: 45px;
+}
+
+.content_column {
+    position: relative;
+    margin-bottom: 50px;
+}
+
+.content_column .inner_column {
+    position: relative;
+    padding-left: 30px;
+}
+
+.text {
+    margin-bottom: 40px;
+    font-size: 16px;
+    line-height: 26px;
+    color: #848484;
+    font-weight: 400;
+}
+
+.list_items {
+    margin-bottom: 45px;
+}
+
+.btn_box {
+    position: relative;
+}
+
+.btn_box a {
+    padding: 15px 50px;
+}
+
+.image_column {
+    position: relative;
+}
+
+.image_column .text_layer {
+    position: absolute;
+    right: -110px;
+    top: 50%;
+    font-size: 325px;
+    line-height: 1em;
+    color: #ffffff;
+    margin-top: -175px;
+    font-weight: 500;
+}
+
+.image_column .inner_column {
+    position: relative;
+    padding-left: 120px;
+    padding-bottom: 125px;
+}
+
+.image_column .inner_column:before {
+    position: absolute;
+    left: -75px;
+    top: 65px;
+    height: 520px;
+    width: 520px;
+    background-image: url(https://i.ibb.co/fxJ1jtC/about-circle-1.png);
+    content: "";
+}
+
+.image_column .image_1 {
+    position: relative;
+}
+
+.image_column .image_2 {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+}
+
+.image_column .image_2 img,
+.image_column .image_1 img {
+    box-shadow: 0 30px 50px rgba(8, 13, 62, .15);
+}
+
+.col_lg_6 {
+    flex: 0 0 50%;
+    max-width: 50%;
+}
+
+.col_md_12, .col_sm_12 {
+    flex: 0 0 100%;
+    max-width: 100%;
+}
+
+/* Order styling */
+.order_2 {
+    order: 2;
+}
+
+/* Row and container styling */
+.row {
+    display: flex;
+    flex-wrap: wrap;
+    margin-right: -15px;
+    margin-left: -15px;
+}
+
+.container {
+    width: 100%;
+    padding-right: 15px;
+    padding-left: 15px;
+    margin-right: auto;
+    margin-left: auto;
+    max-width: 1140px; /* Adjust this value for your layout */
+}
+
+
+@media screen and (max-width: 1200px) {
+    .mainContainer {
+        padding: 48px 24px;
+    }
+}

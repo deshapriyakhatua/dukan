@@ -1,0 +1,130 @@
+.mainContainer {
+    width: 100%;
+    padding: 48px;
+}
+.contentContainer {
+    max-width: 100rem;
+    margin: auto;
+    padding: 0px 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 30px;
+
+}
+.childDiv {
+    flex-grow: 1;
+    padding: 20px 30px;
+    display: flex;
+    justify-content: center;
+    gap: 100px;
+    background-color: #f5f3f3;
+    /* box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px; */
+}
+.contentParent {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    align-items: flex-start;
+    justify-content: center;
+}
+
+.title {
+    font-size: 50px;
+    font-weight: 800;
+    color: #272727;
+}
+
+.desc {
+    font-size: 16px;
+    font-weight: 500;
+    color: #020202a8;
+    font-style: italic;
+}
+
+.button {
+    border: 1px solid rgb(111, 111, 111);
+    padding: 10px 50px;
+    font-size: 18px;
+    font-weight: 600;
+    transition: all .3s ease;
+    background-color: var(--button-background);
+    color: white;
+}
+.button:hover {
+    opacity: .8;
+}
+
+.imgContainer {
+    position: relative;
+}
+
+.img {
+    position: relative;
+    right: 0;
+    top: 0px;
+    width: 550px;
+    aspect-ratio: 1/1;
+    object-fit: contain;
+    transition: all .3s ease;
+}
+
+.childDiv:hover .img {
+    scale: 1.01;
+}
+
+@media screen and (max-width: 1200px) {
+    .mainContainer {
+        padding: 24px;
+    }
+    .contentContainer {
+        gap: 10px;
+    }
+    .childDiv {
+        gap: 50px;
+    }
+    .img {
+        width: 450px;
+    }
+}
+
+@media screen and (max-width: 1024px) {
+    .mainContainer {
+        padding: 24px;
+    }
+    .childDiv {
+        gap: 30px;
+    }
+    .title {
+        font-size: 40px;
+    }
+    .img {
+        width: 400px;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .childDiv {
+        flex-direction: column-reverse;
+        align-items: center;
+        padding: 30px 10px 50px;
+    }
+    .contentParent {
+        align-items: center;
+    }
+    .contentParent>* {
+        text-align: center;
+    }
+    .img {
+        width: 350px;
+    }
+}
+
+@media screen and (max-width: 425px) {
+    .img {
+        width: 300px;
+    }
+    .title {
+        font-size: 30px;
+    }
+}

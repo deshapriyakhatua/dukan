@@ -1,0 +1,247 @@
+.mainContainer {
+    width: 100%;
+}
+
+.postContainer {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: stretch;
+    gap: 30px;
+}
+
+.mainPost {
+    /* border: 1px solid red; */
+    position: relative;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    border-radius: 16px;
+}
+
+.imgSection {
+    /* border: 1px solid blue; */
+    width: 100%;
+    aspect-ratio: 3/2;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.imgSection img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: brightness(96%) contrast(140%) saturate(120%) ;
+    transition: 0.3s ease-in-out;
+    /* border: 1px solid black; */
+}
+
+.tagSection {
+    position: absolute;
+    top: 18px;
+    left: 25px;
+    display: flex;
+    flex-direction: column;
+    border-radius: 4px;
+    background-color: #f4a511;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+
+.tagDate,
+.tagMonth {
+    text-transform: uppercase;
+    padding: 0.4rem 1rem;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.1rem;
+}
+
+.tagDate {
+    font-size: 22px;
+}
+
+.mainPost:hover .imgSection img {
+    -webkit-transform: scale(1.1);
+    transform: scale(1.1);
+    -webkit-transition: 0.3s ease-in-out;
+    transition: 0.3s ease-in-out;
+}
+
+.otherInfoSection {
+    /* border: 1px solid green; */
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 20px;
+    width: 100%;
+    padding: 10px;
+    display: none;
+}
+
+.otherInfoSection>:nth-child(n) {
+    /* border: 1px solid black; */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 4px;
+    font-size: 12px;
+    font-weight: 400;
+    color: #777777;
+    cursor: pointer;
+    transition: ease-in-out 0.4s;
+}
+
+.otherInfoSection>:nth-child(n):hover {
+    color: #be9d08;
+    transition: ease-in-out 0.4s;
+}
+
+.icon {}
+
+.headingSection {
+    font-weight: 600;
+    font-size: 35px;
+    word-spacing: 0.01rem;
+    /* border: 1px solid black; */
+    transition: ease-in-out 0.4s;
+    margin-top: 15px;
+}
+
+.headingSection:hover {
+    color: #ffdc39;
+    transition: ease-in-out 0.4s;
+}
+
+.mainPost hr {
+    width: 100%;
+    margin: 20px 0;
+    border: 1px solid #e9e8e8;
+}
+
+.mainPost>p {
+    font-weight: 300;
+}
+
+
+.sharePost {
+    display: flex;
+    gap: 10px;
+    border-top: 1px solid rgb(203, 202, 202);
+    padding: 20px 0;
+}
+
+.tag {
+    background-color: #fafafa;
+    padding: 5px 10px;
+    cursor: pointer;
+    transition: all .3s ease;
+    opacity: 0;
+}
+
+.tag:hover {
+    color: #836c03;
+}
+
+.gap {
+    flex: 1;
+}
+
+.postContent {
+    width: 100%;
+}
+
+.postContent * {
+    margin: revert;
+    padding: revert;
+    box-sizing: revert;
+}
+
+.shareTitle {}
+
+.iconDiv {
+    cursor: pointer;
+}
+
+.shareIcon {
+    width: 20px;
+    height: 20px;
+    transition: all .3s ease;
+}
+
+.shareIcon:hover {
+    color: #f4a511;
+}
+
+.commentsView {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    display: none;
+}
+
+.commentsView>h5 {
+    font-weight: 600;
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+    color: #5b5b5b;
+    border-bottom: 1px solid rgb(216, 214, 214);
+}
+
+.commentView {
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    gap: 20px
+}
+
+.profileIconView {
+    background-color: #f0f0f0;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+}
+
+.profileIcon {
+    width: 20px;
+    height: 20px;
+
+}
+
+.commentDetails {
+    flex: 1;
+}
+
+.commentDetails>:nth-child(1) {
+    font-size: 13px;
+    font-weight: 600;
+    color: rgb(52, 52, 52);
+}
+
+.commentDetails>:nth-child(2) {
+    font-size: 12px;
+    font-weight: 400;
+    color: rgb(0, 0, 0);
+}
+
+.commentDetails>:nth-child(3) {
+    margin-top: 10px;
+    font-size: 14px;
+    font-weight: 500;
+    color: rgb(118, 118, 118);
+}
+
+@media screen and (max-width: 768px) {
+    .tag {
+        display: none;
+    }
+    .gap {
+        display: none;
+    }
+}

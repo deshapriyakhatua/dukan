@@ -1,0 +1,149 @@
+.mainContainer {
+    width: 100%;
+    padding: 48px;
+}
+.contentContainer {
+    max-width: 100rem;
+    margin: auto;
+    padding: 0px 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 30px;
+
+}
+.childDiv {
+    position: relative;
+    flex-grow: 1;
+    padding: 50px;
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    background-color: #efefef;
+    /* box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px; */
+}
+
+.largeText {
+    font-size: 120px;
+    color: #0c0c0c1b;
+    font-weight: 800;
+    position: absolute;
+    right: 0;
+    bottom: 0;
+}
+.contentParent {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    align-items: flex-start;
+}
+
+.title {
+    font-size: 50px;
+    font-weight: 600;
+    color: #000000dc;
+}
+
+.desc {
+    font-size: 20px;
+    font-weight: 500;
+    color: #696969;
+}
+
+.btnContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.button {
+    background-color: var(--button-background);
+    color: white;
+    font-size: 15px;
+    font-weight: 500;
+    padding: 20px 30px;
+    transition: all .3s ease;
+}
+
+.childDiv:hover .button {
+    scale: 1.05;
+}
+
+
+@media screen and (max-width: 1440px) {
+    .largeText {
+        font-size: 100px;
+    }
+    .title {
+        font-size: 40px;
+    }
+    .desc {
+        font-size: 18px;
+    }
+}
+
+@media screen and (max-width: 1200px) {
+    .mainContainer {
+        padding: 24px;
+    }
+    .contentContainer {
+        gap: 10px;
+    }
+    .largeText {
+        font-size: 80px;
+    }
+    .button {
+        padding: 10px 20px;
+    }
+}
+
+@media screen and (max-width: 1024px) {
+    .mainContainer {
+        padding: 24px;
+    }
+    .contentContainer {
+        gap: 50px;
+        flex-direction: column;
+        align-items: stretch;
+    }
+    .childDiv {
+        padding: 50px 20px;
+    }
+    .largeText {
+        font-size: 65px;
+    }
+    .title {
+        font-size: 32px;
+    }
+    .desc {
+        font-size: 15px;
+    }
+    .button {
+        font-size: 13px;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .childDiv {
+        flex-direction: column;
+        padding: 40px 20px;
+    }
+    .largeText {
+        font-size: 45px;
+        right: 10px;
+    }
+    .title {
+        font-size: 20px;
+    }
+    .desc {
+        font-size: 11px;
+    }
+    .btnContainer {
+        justify-content: flex-start;
+
+    }
+    .button {
+        font-size: 12px;
+    }
+}
+

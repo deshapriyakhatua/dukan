@@ -1,0 +1,109 @@
+.mainContainer {
+    width: 100%;
+    padding: 48px;
+}
+.contentContainer {
+    max-width: 100rem;
+    margin: auto;
+    padding: 0px 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 30px;
+
+}
+.childDiv {
+    flex-grow: 1;
+    padding: 20px 30px;
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    background-color: #efefef;
+    /* box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px; */
+}
+.childDiv:last-child {
+    flex-direction: row-reverse;
+}
+
+.childDiv:last-child > .contentParent {
+    align-items: flex-end;
+}
+.contentParent {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    align-items: flex-start;
+}
+
+.title {
+    font-size: 17px;
+    font-weight: 500;
+    color: #4e4e4e;
+}
+
+.desc {
+    font-size: 24px;
+    font-weight: 600;
+    color: #000000;
+}
+
+.button {
+    border: 1px solid rgb(111, 111, 111);
+    padding: 10px 20px;
+    font-weight: 600;
+    transition: all .3s ease;
+}
+.button:hover {
+    background-color: var(--button-background);
+    color: white;
+}
+
+.imgContainer {
+    position: relative;
+}
+
+.img {
+    position: relative;
+    right: 0;
+    top: 0px;
+    width: 150px;
+    aspect-ratio: 1/1;
+    object-fit: contain;
+    transition: all .3s ease;
+}
+
+.childDiv:hover .img {
+    scale: 1.1;
+}
+
+@media screen and (max-width: 1200px) {
+    .mainContainer {
+        padding: 24px;
+    }
+    .contentContainer {
+        gap: 10px;
+    }
+    .childDiv {
+        padding: 20px 10px 50px 20px;
+    }
+}
+
+@media screen and (max-width: 1024px) {
+    .mainContainer {
+        padding: 24px;
+    }
+    .contentContainer {
+        gap: 50px;
+        flex-direction: column;
+        align-items: stretch;
+    }
+    .childDiv {
+        padding: 20px 10px 50px 20px;
+    }
+}
+
+@media screen and (max-width: 500px) {
+    .img {
+        width: 120px;
+    }
+}

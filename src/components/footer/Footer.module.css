@@ -1,0 +1,141 @@
+
+/*=============== VARIABLES CSS ===============*/
+.footer {
+  /*========== Font and typography ==========*/
+  /*.5rem = 8px | 1rem = 16px ...*/
+  --normal-font-size: .938rem;
+  --small-font-size: .875rem;
+  /*========== Font weight ==========*/
+  --font-semi-bold: 600;
+  /*========== width & height ==========*/
+  --main-navbar-width: 100rem;
+}
+
+@media screen and (max-width: 1024px) {
+  .footer {
+    --normal-font-size: .9rem;
+    --small-font-size: .813rem;
+  }
+}
+
+
+.footer {
+  font-size: var(--normal-font-size);
+  color: black;
+  width: 100%;
+  background: #efefef;
+}
+
+.footer .footer_row {
+  max-width: var(--main-navbar-width);
+  margin: auto;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1.5rem;
+  padding: 3.7rem 3rem;
+}
+
+.footer_row .footer_col .footer_col_heading {
+  color: #000000;
+  font-size: var(--normal-font-size);
+  font-weight: var(--font-semi-bold);
+}
+
+.footer_col .footer_col_list_parent {
+  margin-top: 20px;
+}
+
+.footer_col .footer_col_list_parent .footer_col_lists {
+  list-style: none;
+  margin-bottom: 10px;
+}
+
+.footer_col .footer_col_list_parent .footer_col_lists .footer_col_links {
+  text-decoration: none;
+  font-size: var(--small-font-size);
+  color: #595959;
+  font-weight: 500;
+}
+
+.footer_col .footer_col_list_parent .footer_col_lists .footer_col_links:hover {
+  color: #ad0303;
+}
+
+.footer_col p {
+  margin: 20px 0;
+  color: #5e5e5e;
+  max-width: 300px;
+}
+
+.footer_col form {
+  display: flex;
+  gap: 5px;
+}
+
+.footer_col input {
+  height: 40px;
+  border-radius: 6px;
+  background: none;
+  width: 100%;
+  outline: none;
+  border: 1px solid #989898 ;
+  caret-color: #000000;
+  color: #000000;
+  padding-left: 10px;
+}
+
+.footer_col input::placeholder {
+  color: #575757;
+}
+
+ .footer_col form button {
+  background: #e46e6e;
+  color: white;
+  outline: none;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: 0.2s ease;
+}
+
+.footer_col form button:hover {
+  background: #e15a5a;
+}
+
+.footer_col .icons {
+  display: flex;
+  margin-top: 30px;
+  gap: 30px;
+  cursor: pointer;
+}
+
+.footer_col .icons i {
+  color: #afb6c7;
+}
+
+.footer_col .icons i:hover  {
+  color: #fff;
+}
+
+@media (max-width: 768px) {
+ 
+  .footer .footer_row {
+    padding: 2rem 1.5rem;
+  }
+
+  .footer_col form {
+    display: block;
+  }
+
+  .footer_col form :where(input, button) {
+    width: 100%;
+  }
+
+  .footer_col form button {
+    margin: 10px 0 0 0;
+  }
+}

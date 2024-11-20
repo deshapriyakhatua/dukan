@@ -1,0 +1,117 @@
+.mainContainer {
+    width: 100%;
+    padding: 48px 0;
+}
+
+.carousel {
+    margin: auto;
+    max-width: 100rem;
+    position: relative;
+}
+
+.slides {
+    position: relative;
+    height: 700px;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    list-style: none;
+}
+
+.slides * {
+    user-select: none;
+}
+
+.slideContainer {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    transition: opacity 0.7s ease-in-out;
+}
+
+.active {
+    opacity: 1;
+}
+
+.slideImage {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.slideImage img {
+    width: auto;
+    min-width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Navigation Controls */
+.carouselControls {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    z-index: 999;
+    display: flex;
+    justify-content: space-between;
+    transform: translateY(-50%);
+}
+
+.carouselControls button {
+    background: none;
+    border: none;
+    font-size: 100px;
+    color: #fff;
+    cursor: pointer;
+    opacity: 0.5;
+    transition: opacity 0.3s;
+}
+
+.carouselControls button:hover {
+    opacity: 1;
+}
+
+.prevSlide {
+    padding-left: 20px;
+}
+
+.nextSlide {
+    padding-right: 20px;
+}
+
+/* Dot Indicators */
+.carouselDots {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 20px;
+    z-index: 999;
+    text-align: center;
+}
+
+.carouselDot {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background-color: #fff;
+    opacity: 0.5;
+    margin: 5px;
+    border: none;
+    cursor: pointer;
+    transition: opacity 0.3s;
+}
+
+.activeDot {
+    opacity: 1;
+}
+
+@media screen and (max-width: 100rem) {
+    .mainContainer {
+        padding-top: 0;
+    }
+}

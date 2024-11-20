@@ -1,12 +1,12 @@
 :root {
   --background: #ffffff;
-  --foreground: #171717;
+  --foreground: #000000;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --background: #ffffff;
+    --foreground: #000000;
   }
 }
 
@@ -19,7 +19,7 @@ body {
 body {
   color: var(--foreground);
   background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-montserrat);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -37,6 +37,85 @@ a {
 
 @media (prefers-color-scheme: dark) {
   html {
-    color-scheme: dark;
+    color-scheme: light;
+  }
+}
+
+:root {
+  color-scheme: light ;
+  color: #213547;
+  background-color: #ffffff;
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+  --font-size-1: 24px;
+  --font-size-2: 23px;
+  --font-size-3: 21px;
+  --font-size-4: 20px;
+  --font-size-5: 18px;
+  --font-size-6: 17px;
+  --font-size-7: 16px;
+  --font-size-8: 15px;
+  --font-size-9: 14px;
+  --font-size-10: 13px;
+  --background-color: white;
+  --color: black;
+  --background-color-hover: white;
+  --color-hover: black;
+  --nav-z-index: 100;
+  --main-navbar-width: 1600px;
+  --button-background: #e46e6e;
+  
+}
+
+* {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+  font-family: var(--font-montserrat);
+  -webkit-tap-highlight-color: transparent;
+  /* auto background color on mobile press */
+}
+
+/* ================ stop text selection ============= */
+.stop_text_selection_child * {
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.stop_text_selection {
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+
+body {
+  min-width: 320px;
+  min-height: 100vh;
+}
+
+h1 {
+  font-size: 3.2em;
+  line-height: 1.1;
+}
+
+button {
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: border-color 0.25s;
+}
+
+
+
+@media screen and (max-width: 1600px) {
+  :root {
+    --main-navbar-width: 100%;
   }
 }
