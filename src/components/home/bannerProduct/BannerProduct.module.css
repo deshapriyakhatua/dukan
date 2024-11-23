@@ -1,0 +1,144 @@
+.mainSection {
+    width: 100%;
+    padding: 50px;
+}
+
+.mainContainer {
+    max-width: 100rem;
+    margin: auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+}
+
+.singleSection,
+.gridSection {
+    width: 100%;
+    height: 900px;
+}
+
+.singleSection {
+    position: relative;
+    overflow: hidden;
+    position: relative;
+}
+
+.singleSection>img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: all .3s ease;
+}
+
+.singleSection:hover>img {
+    scale: 1.05;
+}
+
+.singleGradientFilter {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    opacity: 0;
+    background-image: linear-gradient(180deg, transparent, #000);
+    transition: all .3s ease;
+}
+
+.singleTextContent {
+    position: absolute;
+    bottom: -100px;
+    left: 0;
+    padding: 20px;
+    color: white;
+    transition: all .3s ease;
+}
+
+.singleSection:hover>.singleTextContent {
+    bottom: 0;
+}
+
+.singleSection:hover>.singleGradientFilter {
+    opacity: .6;
+}
+
+.gridSection {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: minmax(0, 1fr) minmax(0, 1fr);
+    gap: 15px;
+}
+
+.gridContent {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    position: relative;
+}
+
+.gridContent>img {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+    transition: all .3s ease;
+}
+
+.gradientFilter {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    opacity: 0;
+    background-image: linear-gradient(180deg, transparent, #000);
+    transition: all .3s ease;
+}
+
+.textContent {
+    position: absolute;
+    bottom: -100px;
+    left: 0;
+    padding: 10px;
+    color: white;
+    transition: all .3s ease;
+}
+
+.gridContent:hover>img {
+    scale: 1.05;
+}
+
+.gridContent:hover>.gradientFilter {
+    opacity: 0.55;
+}
+
+.gridContent:hover>.textContent {
+    bottom: 0;
+}
+
+@media screen and (max-width: 1200px) {
+    .mainSection {
+        padding: 25px;
+    }
+}
+
+@media screen and (max-width: 1024px) {
+    .mainContainer {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media screen and (max-width: 768px) {
+
+    .singleSection,
+    .gridSection {
+        height: 600px;
+    }
+}
+
+@media screen and (max-width: 500px) {
+
+    .singleSection,
+    .gridSection {
+        height: 400px;
+    }
+}

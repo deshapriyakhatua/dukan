@@ -9,6 +9,7 @@ import SingleBannerProduct from "@/components/home/singleBannerProduct/SingleBan
 import StyledBanner from "@/components/home/styledBanner/StyledBanner";
 import GridBanners from "@/components/home/gridBanners/GridBanners";
 import BannerTag from "@/components/home/bannerTag/BannerTag";
+import BannerProduct from "@/components/home/bannerProduct/BannerProduct";
 
 export default function Home() {
   return (
@@ -16,6 +17,7 @@ export default function Home() {
       <SimpleCarousel />
       <SingleBanner />
       <ProductsSection />
+      <BannerProduct />
       <CarouselTextImage />
       <BannerCards />
       <SingleBannerProduct />

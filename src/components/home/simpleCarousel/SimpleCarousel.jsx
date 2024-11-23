@@ -1,10 +1,11 @@
 "use client";
 
-import React, { useEffect, useState } from 'react';
-import styles from './SimpleCarousel.module.css';
+import React, { useEffect, useState } from "react";
+import styles from "./SimpleCarousel.module.css";
 
 function SimpleCarousel() {
     const [currentSlide, setCurrentSlide] = useState(0);
+    const [screenWidth, setScreenWidth] = useState(0);
 
     const images = [
         "https://www.ethnicset.in/cdn/shop/articles/banner2.jpg?v=1715326211&width=1500",
@@ -22,37 +23,38 @@ function SimpleCarousel() {
         "https://i.pinimg.com/736x/14/fa/eb/14faebf0452f997bbed5ba943cd57a34.jpg",
         "https://imgs-aashniandco.gumlet.io/pub/media/catalog/product/cache/9306e52ccddca80c1fb471fb66a6193f/s/a/sacgh000820_c_.jpg",
         "https://assets.vogue.in/photos/63c4cf8b0b73d722037aef02/2:3/w_2560%2Cc_limit/Sabyasachi%2520Heritage%2520Bridal%25202023%2520(3).jpg"
-    ]
+    ];
 
     const nextSlide = () => setCurrentSlide((prevSlide) => (prevSlide + 1) % images.length);
     const prevSlide = () => setCurrentSlide((prevSlide) => (prevSlide - 1 + images.length) % images.length);
-    const [screenWidth, setScreenWidth] = useState(window.innerWidth);
 
     useEffect(() => {
-
-        // Handle window resize to remove inline styles for larger screens
-        const handleResize = () => {
+        // Initialize screenWidth only in the browser
+        if (typeof window !== "undefined") {
             setScreenWidth(window.innerWidth);
-        };
 
-        window.addEventListener('resize', handleResize);
+            const handleResize = () => {
+                setScreenWidth(window.innerWidth);
+            };
 
-        return () => {
-            window.removeEventListener('resize', handleResize);
-        };
+            window.addEventListener("resize", handleResize);
 
+            return () => {
+                window.removeEventListener("resize", handleResize);
+            };
+        }
     }, []);
 
     useEffect(() => {
         const interval = setInterval(nextSlide, 5000);
         return () => clearInterval(interval);
-    }, []); // No dependencies needed
+    }, []);
 
     return (
         <div className={styles.mainContainer}>
             <div className={styles.carousel}>
                 <ul className={styles.slides}>
-                    {images && (screenWidth < 768 ?mobImages :images).map((image, index) => (
+                    {(screenWidth < 768 ? mobImages : images).map((image, index) => (
                         <li
                             key={index}
                             className={`${styles.slideContainer} ${index === currentSlide ? styles.active : ''}`}
@@ -65,11 +67,15 @@ function SimpleCarousel() {
                     ))}
                 </ul>
                 <div className={styles.carouselControls}>
-                    <button onClick={prevSlide} className={styles.prevSlide}>&lsaquo;</button>
-                    <button onClick={nextSlide} className={styles.nextSlide}>&rsaquo;</button>
+                    <button onClick={prevSlide} className={styles.prevSlide}>
+                        &lsaquo;
+                    </button>
+                    <button onClick={nextSlide} className={styles.nextSlide}>
+                        &rsaquo;
+                    </button>
                 </div>
                 <div className={styles.carouselDots}>
-                    {images && (screenWidth < 768 ?mobImages :images).map((_, index) => (
+                    {(screenWidth < 768 ? mobImages : images).map((_, index) => (
                         <button
                             key={index}
                             onClick={() => setCurrentSlide(index)}
