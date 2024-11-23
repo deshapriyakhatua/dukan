@@ -153,7 +153,7 @@ function Header() {
     const [isSearchbarOpened, setIsSearchbarOpened] = useState(false);
     const [isAccountOpened, setIsAccountOpened] = useState(false);
     const [activeDropdown, setActiveDropdown] = useState(null);
-    const [screenWidth, setScreenWidth] = useState(window.innerWidth);
+    const [screenWidth, setScreenWidth] = useState(null); // Start with null
 
     const toggleMenuButton = () => {
         setMenuOpened(!menuOpened);
@@ -165,36 +165,40 @@ function Header() {
 
     const toggleSearchbarDropdown = (bool) => {
         setIsSearchbarOpened(bool);
-    }
+    };
+
     const toggleAccountDropdown = (bool) => {
         setIsAccountOpened(bool);
-    }
+    };
 
     useEffect(() => {
-
-        // Handle window resize to remove inline styles for larger screens
-        const handleResize = () => {
+        // Ensure this code only runs in the browser
+        if (typeof window !== 'undefined') {
             setScreenWidth(window.innerWidth);
-        };
 
-        window.addEventListener('resize', handleResize);
+            const handleResize = () => {
+                setScreenWidth(window.innerWidth);
+            };
 
-        return () => {
-            window.removeEventListener('resize', handleResize);
-        };
+            window.addEventListener('resize', handleResize);
 
+            return () => {
+                window.removeEventListener('resize', handleResize);
+            };
+        }
     }, []);
 
     useEffect(() => {
-        // console.log(screenWidth)
-        const dropdownItems = document.querySelectorAll(`.${styles.dropdown__item}`);
-        if (screenWidth > 1200) {
+        if (screenWidth && screenWidth > 1200) {
+            const dropdownItems = document.querySelectorAll(`.${styles.dropdown__item}`);
             dropdownItems.forEach((item) => {
                 const dropdownContainer = item.querySelector(`.${styles.dropdown__container}`);
-                dropdownContainer.removeAttribute('style');
+                if (dropdownContainer) {
+                    dropdownContainer.removeAttribute('style');
+                }
             });
         }
-    }, [screenWidth])
+    }, [screenWidth]);
 
     return (
         <div>
