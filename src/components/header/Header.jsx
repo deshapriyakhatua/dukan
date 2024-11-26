@@ -6,6 +6,7 @@ import { AiOutlineClose } from "react-icons/ai";
 import { CiSearch, CiUser, CiMenuFries } from "react-icons/ci";
 import { FaShopware } from 'react-icons/fa'
 import { PiHeartStraightLight, PiHandbagLight, PiUserCircleLight, PiUserLight } from 'react-icons/pi'
+import { useAuth } from '@/context/AuthContext';
 
 function Header() {
 
@@ -154,17 +155,7 @@ function Header() {
     const [isAccountOpened, setIsAccountOpened] = useState(false);
     const [activeDropdown, setActiveDropdown] = useState(null);
     const [screenWidth, setScreenWidth] = useState(null); // Start with null
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
-
-    useEffect(() => {
-        // Check for the presence of the 'session' cookie
-        const hasSessionCookie = document.cookie
-            .split("; ")
-            .some((cookie) => cookie.startsWith("session="));
-        setIsLoggedIn(hasSessionCookie);
-        console.log(hasSessionCookie)
-
-    }, []);
+    const { isLoggedIn, setIsLoggedIn } = useAuth();
 
     const toggleMenuButton = () => {
         setMenuOpened(!menuOpened);

@@ -2,9 +2,12 @@
 
 import React, { useState } from "react";
 import styles from "./page.module.css";
-import { useRouter } from "next/navigation";
+import { redirect, useRouter } from "next/navigation";
+import { useAuth } from "@/context/AuthContext";
+
 
 const SigninPage = () => {
+
   const [formData, setFormData] = useState({
     phone: "",
     password: "",
@@ -12,6 +15,9 @@ const SigninPage = () => {
   const [statusMessage, setStatusMessage] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
+  const { isLoggedIn, setIsLoggedIn } = useAuth();
+
+  if(isLoggedIn) redirect('/');
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -61,7 +67,8 @@ const SigninPage = () => {
 
       if (response.ok) {
         setStatusMessage("Login successful!");
-        router.push("/");
+        setIsLoggedIn(true);
+        // router.refresh();
       } else {
         setStatusMessage(result.error || "Invalid credentials.");
       }

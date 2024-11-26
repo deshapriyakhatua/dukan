@@ -1,7 +1,8 @@
-import {Montserrat} from "next/font/google";
+import { Montserrat } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/header/Header";
 import Footer from "@/components/footer/Footer";
+import { AuthProvider } from "@/context/AuthContext";
 
 
 const montserrat = Montserrat({
@@ -18,11 +19,13 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className={` ${montserrat.variable}`}>
-        <Header />
-        {children}
-        <Footer />
-      </body>
+      <AuthProvider>
+        <body className={` ${montserrat.variable}`}>
+          <Header />
+          {children}
+          <Footer />
+        </body>
+      </AuthProvider>
     </html>
   );
 }

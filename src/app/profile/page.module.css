@@ -1,0 +1,29 @@
+.mainPage {
+    width: 100%;
+    padding: 48px;
+}
+.mainContainer {
+    margin: auto;
+    max-width: 100rem;
+    display: flex;
+    flex-direction: column;
+    gap: 50px;
+}
+.firstSection {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+}
+.card {
+    min-width: 350px;
+    padding: 20px;
+    border: 1px solid gray;
+    display: flex;
+    gap: 15px;
+    align-items: center;
+}
+
+.cRow {
+ display: flex;
+}
