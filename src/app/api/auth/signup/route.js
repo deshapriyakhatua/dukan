@@ -4,13 +4,12 @@ import bcrypt from "bcrypt";
 
 export async function POST(req) {
   try {
-    await connectToDatabase();
 
     const body = await req.json();
     const { phone, password, name, email } = body;
 
     // Validate required fields
-    if (!phone && !password) {
+    if (!phone || !password) {
       return new Response(
         JSON.stringify({ error: "Phone and password are required" }),
         {
@@ -19,18 +18,11 @@ export async function POST(req) {
         }
       );
     }
-    if (!phone) {
+
+    // Additional validation for phone and password
+    if (typeof phone !== "string") {
       return new Response(
-        JSON.stringify({ error: "Phone No is required" }),
-        {
-          status: 400,
-          headers: { "Content-Type": "application/json" },
-        }
-      );
-    }
-    if (!password) {
-      return new Response(
-        JSON.stringify({ error: "Password is required" }),
+        JSON.stringify({ error: "Phone must be a string" }),
         {
           status: 400,
           headers: { "Content-Type": "application/json" },
@@ -38,19 +30,9 @@ export async function POST(req) {
       );
     }
 
-    // Additional validation for phone and password
-    if (typeof phone !== "number") {
+    if (phone.length !== 10 || !/^\d+$/.test(phone)) {
       return new Response(
-        JSON.stringify({ error: "Phone number type must be number" }),
-        {
-          status: 400,
-          headers: { "Content-Type": "application/json" },
-        }
-      );
-    }
-    if (String(phone).length < 10) {
-      return new Response(
-        JSON.stringify({ error: "Phone number should contain 10 digits" }),
+        JSON.stringify({ error: "Phone number must contain exactly 10 digits" }),
         {
           status: 400,
           headers: { "Content-Type": "application/json" },
@@ -60,13 +42,14 @@ export async function POST(req) {
 
     if (typeof password !== "string") {
       return new Response(
-        JSON.stringify({ error: "Password must be string" }),
+        JSON.stringify({ error: "Password must be a string" }),
         {
           status: 400,
           headers: { "Content-Type": "application/json" },
         }
       );
     }
+
     if (password.length < 6) {
       return new Response(
         JSON.stringify({ error: "Password must be at least 6 characters" }),
@@ -77,6 +60,8 @@ export async function POST(req) {
       );
     }
 
+    await connectToDatabase();
+    
     // Check if user already exists
     const existingUser = await User.findOne({ phone });
     if (existingUser) {

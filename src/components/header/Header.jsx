@@ -154,6 +154,17 @@ function Header() {
     const [isAccountOpened, setIsAccountOpened] = useState(false);
     const [activeDropdown, setActiveDropdown] = useState(null);
     const [screenWidth, setScreenWidth] = useState(null); // Start with null
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+    useEffect(() => {
+        // Check for the presence of the 'session' cookie
+        const hasSessionCookie = document.cookie
+            .split("; ")
+            .some((cookie) => cookie.startsWith("session="));
+        setIsLoggedIn(hasSessionCookie);
+        console.log(hasSessionCookie)
+
+    }, []);
 
     const toggleMenuButton = () => {
         setMenuOpened(!menuOpened);
@@ -288,11 +299,32 @@ function Header() {
                             <div className={`${styles.navbar_account_dropdown} ${isAccountOpened && styles.visible_dropdown}`}>
                                 <div className={styles.close_account_dropdown} onClick={() => { toggleAccountDropdown(false); }}></div>
                                 <div className={styles.main_nav_account_container}>
-                                    <a href="/e-commerce-frontend/signin/signin.html" id={styles.navbar_account_dropdown_login} className={styles.dropList}>LOGIN/SIGNUP</a>
-                                    <a href="#" className={styles.dropList} id={styles.navbar_account_dropdown_account}></a>
-                                    <a href="#" className={styles.dropList}>Orders</a>
-                                    <a href="#" className={styles.dropList}>Coupons</a>
-                                    <a href="#" className={styles.dropList}>Saved Address</a>
+                                    {isLoggedIn ? (
+                                        <a
+                                            href="/profile"
+                                            id={styles.navbar_account_dropdown_login}
+                                            className={styles.dropList}
+                                        >
+                                            Profile
+                                        </a>
+                                    ) : (
+                                        <a
+                                            href="/auth/signin"
+                                            id={styles.navbar_account_dropdown_login}
+                                            className={styles.dropList}
+                                        >
+                                            LOGIN/SIGNUP
+                                        </a>
+                                    )}
+                                    <a href="#" className={styles.dropList}>
+                                        Orders
+                                    </a>
+                                    <a href="#" className={styles.dropList}>
+                                        Coupons
+                                    </a>
+                                    <a href="#" className={styles.dropList}>
+                                        Saved Address
+                                    </a>
                                 </div>
                             </div>
                         </div>
