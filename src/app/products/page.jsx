@@ -1,38 +1,73 @@
 "use client";
 
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import styles from './page.module.css'
 import { VscStarHalf } from 'react-icons/vsc';
 import { PiHeartFill, PiHeartStraightLight } from 'react-icons/pi';
 import { IoIosArrowDown } from 'react-icons/io';
+import { useRouter, useSearchParams } from 'next/navigation';
+
+const fetchProducts = async function (category, subCategory, page, limit) {
+    try {
+
+        const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/products/?category=${category}&sub-category=${subCategory}&page=${page}&limit=${limit}`, {
+            next: { revalidate: 3 }, // Revalidate after 1 hour
+            cache: 'force-cache', // Use cached data
+        });
+
+        if (!res.ok) {
+            // Extract and throw server-provided error message if available
+            const errorData = await res.json();
+            throw new Error(errorData.message || 'Failed to fetch product');
+        }
+
+        return res.json();
+    } catch (error) {
+        console.error(`Error fetching products:`, error.message);
+        throw new Error('An error occurred while fetching the product. Please try again later.');
+    }
+}
 
 function Products() {
 
+    const searchParams = useSearchParams();
+    const category = searchParams.get('category');
+    const subCategory = searchParams.get('sub-category');
+    const [products, setProducts] = useState([]);
+    const router = useRouter();
     const [isFilterOptionsVisible, setIsFilterOptionsVisible] = useState(false);
     const [isSortOptionsVisible, setIsSortOptionsVisible] = useState(false);
 
+    useEffect(() => {
+        async function fetchData() {
+            const response = await fetchProducts(category, subCategory, 1, 20);
+            setProducts(response.data)
+        }
+        fetchData();
+    }, [])
+
     const productImages = [
         { url: 'https://apisap.fabindia.com/medias/20174793-01.jpg?context=bWFzdGVyfGltYWdlc3wxNjMzMDJ8aW1hZ2UvanBlZ3xhREF5TDJnMU1pODFNakl4T1Rnd01UZ3lPVFF3Tmk4eU1ERTNORGM1TTE4d01TNXFjR2N8YmZkMWQ4YWRlMDM3YjMxMTAxYjQ3ZGJlZmUxYjQyNjM4NTgxZmI2MTNhM2ZmOTIzZTdjN2YzYmQ1MDc1N2EyMA', alt: '' },
-        {url: 'https://assets.myntassets.com/h_1440,q_90,w_1080/v1/assets/images/23433406/2023/5/26/aa7221d4-4c83-4044-b44c-3fee51379a661685117567804RARERABBITMenBrownSlimFitOpaqueCasualShirt3.jpg', alt: ''},
-        {url: 'https://assets.myntassets.com/h_1440,q_90,w_1080/v1/assets/images/28219632/2024/3/12/2f53aaab-40e1-4c5b-8148-6ad150e5f4341710256687634CampusSutraMenClassicOpaqueCheckedCasualShirt2.jpg', alt: ''},
+        { url: 'https://assets.myntassets.com/h_1440,q_90,w_1080/v1/assets/images/23433406/2023/5/26/aa7221d4-4c83-4044-b44c-3fee51379a661685117567804RARERABBITMenBrownSlimFitOpaqueCasualShirt3.jpg', alt: '' },
+        { url: 'https://assets.myntassets.com/h_1440,q_90,w_1080/v1/assets/images/28219632/2024/3/12/2f53aaab-40e1-4c5b-8148-6ad150e5f4341710256687634CampusSutraMenClassicOpaqueCheckedCasualShirt2.jpg', alt: '' },
         { url: 'https://apisap.fabindia.com/medias/20174793-03.jpg?context=bWFzdGVyfGltYWdlc3wxNTk1Nzh8aW1hZ2UvanBlZ3xhRE16TDJoaU5TODFNakl4T1Rnd01qWTBPRFl3Tmk4eU1ERTNORGM1TTE4d015NXFjR2N8ZGI1YzdlOTkyMzgxYjVmZjAyM2JhNjBkN2Y1ZGZlZTRkOTYzM2JjMDc2MWVkNGVmZmI2ZjQ0NGU3N2E5N2M5OQ', alt: '' },
-        {url: 'https://assets.myntassets.com/h_1440,q_90,w_1080/v1/assets/images/29058402/2024/4/18/26873ba8-3017-48b1-8537-a03e6c3d8fb61713455556263CampusSutraMenClassicOpaqueStripedCasualShirt1.jpg', alt: ''},
-        {url: 'https://assets.myntassets.com/h_1440,q_90,w_1080/v1/assets/images/29058402/2024/4/18/a301a70e-6d0b-4e5e-a259-ba7e90577d811713455556167CampusSutraMenClassicOpaqueStripedCasualShirt4.jpg', alt: ''},
+        { url: 'https://assets.myntassets.com/h_1440,q_90,w_1080/v1/assets/images/29058402/2024/4/18/26873ba8-3017-48b1-8537-a03e6c3d8fb61713455556263CampusSutraMenClassicOpaqueStripedCasualShirt1.jpg', alt: '' },
+        { url: 'https://assets.myntassets.com/h_1440,q_90,w_1080/v1/assets/images/29058402/2024/4/18/a301a70e-6d0b-4e5e-a259-ba7e90577d811713455556167CampusSutraMenClassicOpaqueStripedCasualShirt4.jpg', alt: '' },
         { url: 'https://apisap.fabindia.com/medias/20174793-04.jpg?context=bWFzdGVyfGltYWdlc3wxNDMxNzF8aW1hZ2UvanBlZ3xhRFppTDJoaVppODFNakl4T1Rnd01qazBNelV4T0M4eU1ERTNORGM1TTE4d05DNXFjR2N8NjAyYmJlOTM5ZTAwZDU2MjIxYzg4YzcxNGEzNTI2ZWNiNTYwODQ0ZmMzODNiYjRjYWEyMjJkZjZhMzE5YTlkOA', alt: '' },
-        {url: 'https://assets.myntassets.com/h_1440,q_90,w_1080/v1/assets/images/23433406/2024/3/28/8b4cd0fd-3fe6-46ce-960e-5e1e96912d9a1711623458987-RARE-RABBIT-Men-Veniziaa-Textured-Slim-Fit-Cotton-Shirt-6871-11.jpg', alt: ''},
+        { url: 'https://assets.myntassets.com/h_1440,q_90,w_1080/v1/assets/images/23433406/2024/3/28/8b4cd0fd-3fe6-46ce-960e-5e1e96912d9a1711623458987-RARE-RABBIT-Men-Veniziaa-Textured-Slim-Fit-Cotton-Shirt-6871-11.jpg', alt: '' },
         { url: 'https://apisap.fabindia.com/medias/20174793-05.jpg?context=bWFzdGVyfGltYWdlc3wxNzAzMTJ8aW1hZ2UvanBlZ3xhRFE1TDJobE9DODFNakl4T1Rnd016UXdNakkzTUM4eU1ERTNORGM1TTE4d05TNXFjR2N8ODg2ZDI1MmQ4NDdkNjkxZjE0MzNmNjE4MGM5ZmMzMjU1MDM4NGJjYzExZDk3MjVkYWZlYzNmZGQwMjZiMDYzNw', alt: '' },
-        {url: 'https://assets.myntassets.com/h_1440,q_90,w_1080/v1/assets/images/29058402/2024/4/18/50f4221f-dbc7-4b5a-aeb3-010e82713d0e1713455556140CampusSutraMenClassicOpaqueStripedCasualShirt3.jpg', alt: ''},
-        {url: 'https://assets.myntassets.com/h_1440,q_90,w_1080/v1/assets/images/23433406/2023/5/26/a7b7c3c3-6d6d-4a8f-bda0-39ae8e7effbc1685117567793RARERABBITMenBrownSlimFitOpaqueCasualShirt5.jpg', alt: ''},
-        {url: 'https://assets.myntassets.com/h_1440,q_90,w_1080/v1/assets/images/28219632/2024/3/12/9da6c838-2e37-451c-91ee-619d95be9a2b1710256687563CampusSutraMenClassicOpaqueCheckedCasualShirt4.jpg', alt: ''},
+        { url: 'https://assets.myntassets.com/h_1440,q_90,w_1080/v1/assets/images/29058402/2024/4/18/50f4221f-dbc7-4b5a-aeb3-010e82713d0e1713455556140CampusSutraMenClassicOpaqueStripedCasualShirt3.jpg', alt: '' },
+        { url: 'https://assets.myntassets.com/h_1440,q_90,w_1080/v1/assets/images/23433406/2023/5/26/a7b7c3c3-6d6d-4a8f-bda0-39ae8e7effbc1685117567793RARERABBITMenBrownSlimFitOpaqueCasualShirt5.jpg', alt: '' },
+        { url: 'https://assets.myntassets.com/h_1440,q_90,w_1080/v1/assets/images/28219632/2024/3/12/9da6c838-2e37-451c-91ee-619d95be9a2b1710256687563CampusSutraMenClassicOpaqueCheckedCasualShirt4.jpg', alt: '' },
         { url: 'https://apisap.fabindia.com/medias/20174793-06.jpg?context=bWFzdGVyfGltYWdlc3wyNzk4MjN8aW1hZ2UvanBlZ3xhRGMwTDJobE1DODFNakl4T1Rnd016WTVOekU0TWk4eU1ERTNORGM1TTE4d05pNXFjR2N8ZjEyNzFmOWE0N2IwZjgwZjcwYmIxMzQ0ZTc5ODBiMzRmNTY3ZWVlZTAwYWQ2NDQyYjk0NTNmZjg0Njg4YjRhMg', alt: '' },
         { url: 'https://apisap.fabindia.com/medias/20174793-07.jpg?context=bWFzdGVyfGltYWdlc3wyMTEyNjZ8aW1hZ2UvanBlZ3xhR1U1TDJnNFlpODFNakl4T1Rnd05EQXlORGcyTWk4eU1ERTNORGM1TTE4d055NXFjR2N8MjM1NTc4ZGZkZjg3ZWU1ZWEyNDkyMTUyNjA4Yjk1NDA0Yjg1NGVmYzFmNTQ3N2E1YjBlN2YwMzg2ZTRjZjhjOA', alt: '' },
-        {url: 'https://assets.myntassets.com/h_1440,q_90,w_1080/v1/assets/images/23433406/2023/5/26/27cccc52-0252-4d4b-a64a-a37055fd85271685117567835RARERABBITMenBrownSlimFitOpaqueCasualShirt4.jpg', alt: ''},
-        {url: 'https://assets.myntassets.com/h_1440,q_90,w_1080/v1/assets/images/29058402/2024/4/18/7f059544-1d61-46d1-a7c4-6cbc64df490b1713455556199CampusSutraMenClassicOpaqueStripedCasualShirt2.jpg', alt: ''},
+        { url: 'https://assets.myntassets.com/h_1440,q_90,w_1080/v1/assets/images/23433406/2023/5/26/27cccc52-0252-4d4b-a64a-a37055fd85271685117567835RARERABBITMenBrownSlimFitOpaqueCasualShirt4.jpg', alt: '' },
+        { url: 'https://assets.myntassets.com/h_1440,q_90,w_1080/v1/assets/images/29058402/2024/4/18/7f059544-1d61-46d1-a7c4-6cbc64df490b1713455556199CampusSutraMenClassicOpaqueStripedCasualShirt2.jpg', alt: '' },
         { url: 'https://apisap.fabindia.com/medias/20174793-02.jpg?context=bWFzdGVyfGltYWdlc3wxMjA4ODJ8aW1hZ2UvanBlZ3xhRFJsTDJoaE55ODFNakl4T1Rnd01qSXlNall5TWk4eU1ERTNORGM1TTE4d01pNXFjR2N8OTBkMmZmNDBiMDJjYjEyMGY5OTFlMGFiNmM0MzJjZmRlMWRiYzMyZDgyZGMyMDlhYjFlOTcyODBkYjkwNzRkMw', alt: '' },
-        {url: 'https://assets.myntassets.com/h_1440,q_90,w_1080/v1/assets/images/23433406/2023/5/26/91976655-23e8-4ca7-96ed-50be3a156b831685117567844RARERABBITMenBrownSlimFitOpaqueCasualShirt6.jpg', alt: ''},
-        {url: 'https://assets.myntassets.com/h_1440,q_90,w_1080/v1/assets/images/28219632/2024/3/12/c7a70b3a-e915-4313-a3d3-b632d0121c691710256687658CampusSutraMenClassicOpaqueCheckedCasualShirt3.jpg', alt: ''},
-        {url: 'https://assets.myntassets.com/h_1440,q_90,w_1080/v1/assets/images/29058402/2024/4/18/ac2e651f-d696-4796-be8b-1421941621391713455556231CampusSutraMenClassicOpaqueStripedCasualShirt5.jpg', alt: ''},
-        {url: 'https://assets.myntassets.com/h_1440,q_90,w_1080/v1/assets/images/23433406/2023/5/26/6c0305d9-997f-4c68-a001-21fa1a14c5a61685117567855RARERABBITMenBrownSlimFitOpaqueCasualShirt7.jpg', alt: ''},
+        { url: 'https://assets.myntassets.com/h_1440,q_90,w_1080/v1/assets/images/23433406/2023/5/26/91976655-23e8-4ca7-96ed-50be3a156b831685117567844RARERABBITMenBrownSlimFitOpaqueCasualShirt6.jpg', alt: '' },
+        { url: 'https://assets.myntassets.com/h_1440,q_90,w_1080/v1/assets/images/28219632/2024/3/12/c7a70b3a-e915-4313-a3d3-b632d0121c691710256687658CampusSutraMenClassicOpaqueCheckedCasualShirt3.jpg', alt: '' },
+        { url: 'https://assets.myntassets.com/h_1440,q_90,w_1080/v1/assets/images/29058402/2024/4/18/ac2e651f-d696-4796-be8b-1421941621391713455556231CampusSutraMenClassicOpaqueStripedCasualShirt5.jpg', alt: '' },
+        { url: 'https://assets.myntassets.com/h_1440,q_90,w_1080/v1/assets/images/23433406/2023/5/26/6c0305d9-997f-4c68-a001-21fa1a14c5a61685117567855RARERABBITMenBrownSlimFitOpaqueCasualShirt7.jpg', alt: '' },
     ];
 
     return (
@@ -57,7 +92,7 @@ function Products() {
                         <span className={styles.filter_option_pre_text}>Filters</span>
                         <IoIosArrowDown />
                     </div>
-                    <div className={styles.filter_options_parent} style={{visibility: isFilterOptionsVisible ?'visible' :'hidden'}}>
+                    <div className={styles.filter_options_parent} style={{ visibility: isFilterOptionsVisible ? 'visible' : 'hidden' }}>
                         <div className={styles.close_main_filter} onClick={() => { setIsFilterOptionsVisible(false); }}></div>
                         <div className={styles.main_filter}>
 
@@ -223,7 +258,7 @@ function Products() {
                         <span id={styles.selected_option}> Recommended </span>
                         <IoIosArrowDown />
                     </div>
-                    <div className={styles.sort_options_parent} style={{visibility: isSortOptionsVisible ?'visible' :'hidden'}}>
+                    <div className={styles.sort_options_parent} style={{ visibility: isSortOptionsVisible ? 'visible' : 'hidden' }}>
                         <div className={styles.close_main_sort} onClick={() => { setIsSortOptionsVisible(false); }}></div>
                         <div className={styles.main_sort}>
                             <span>Recommended</span>
@@ -238,13 +273,13 @@ function Products() {
             </div>
             <div className={styles.main_products_parent}>
                 <div className={styles.main_product}>
-                    {productImages && productImages.map((element, indx) => (
-                        <div className={styles.product__card} onClick={() => {window.location = './product'}} key={indx}>
+                    {products && products.map((product, indx) => (
+                        <div className={styles.product__card} onClick={() => { router.push(`/product/${product?._id}`) }} key={indx}>
                             <div className={styles.product__image}>
-                                <img src={element?.url} alt="Men Pack Of 2 Sustainable Shirts" className={styles.product_main_img} />
+                                <img src={product?.images[0]} alt="Men Pack Of 2 Sustainable Shirts" className={styles.product_main_img} />
                                 <div className={styles.product__rating}>
                                     <span className={styles.rating__number}>4.5</span>
-                                    <VscStarHalf size={10}/>
+                                    <VscStarHalf size={10} />
                                     <span className={styles.rating__seperator}>|</span>
                                     <span className={styles.rating__count}>18.5K</span>
                                 </div>
@@ -261,7 +296,7 @@ function Products() {
                                 <div className={styles.product__wishlist__stock}>
                                     <div className={styles.product__stock}><span className={styles.stock__text}>Only Few Left</span></div>
                                     <div className={styles.product__wishlist}>
-                                        <PiHeartStraightLight size={25} color='#888' className={styles.addToWishlist}/>
+                                        <PiHeartStraightLight size={25} color='#888' className={styles.addToWishlist} />
                                         {/* <PiHeartFill size={25} color='#888' className={styles.addToWishlist}/> */}
                                     </div>
                                 </div>

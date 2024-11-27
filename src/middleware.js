@@ -3,9 +3,10 @@ import { decrypt } from '@/lib/session'; // Assuming decrypt is from your sessio
 
 export async function middleware(request) {
     const pathname = request.nextUrl.pathname;
+    const secureRoutes = ['/api/cart', '/api/product/add', '/api/users'];
 
     switch (true) {
-        case pathname.startsWith('/api/users'): {
+        case secureRoutes.some(route => pathname.startsWith(route)): {
             // Validate session
             const sessionCookie = request.cookies.get('session')?.value;
 
@@ -28,6 +29,9 @@ export async function middleware(request) {
             }
 
             // If session is valid, allow the request to proceed
+            const response = NextResponse.next();
+            response.headers.set('x-user-id', payload.userId);
+            return response;
             break;
         }
 
@@ -58,7 +62,8 @@ export async function middleware(request) {
 // Apply middleware only to specific routes
 export const config = {
     matcher: [
-        '/api/users/:path*', // Applies to all routes under /api/users
-        '/auth/:path*'
+        '/api/:path*', // Applies to all routes under /api/users
+        '/auth/:path*',
+
     ],
 };

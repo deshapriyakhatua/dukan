@@ -1,11 +1,47 @@
-import React from 'react'
+'use client';
+
+import React, { useEffect, useState } from 'react'
 import styles from './ProductContent.module.css'
 import { PiHandbagLight } from 'react-icons/pi'
 import { FaOpencart } from 'react-icons/fa';
 import { IoStarHalfOutline } from 'react-icons/io5';
 
-function ProductContent({product}) {
-    
+function ProductContent({ product }) {
+
+    const [productId, setProductId] = useState(product?._id);
+    const [quantity, setQuantity] = useState(1);
+    const [message, setMessage] = useState('');
+
+    const handleAddToCart = async () => {
+        setMessage(''); // Clear previous messages
+
+        if (!productId || quantity < 1) {
+            setMessage('Please fill all fields correctly.');
+            return;
+        }
+
+        try {
+            const response = await fetch('/api/cart/add', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ productId, quantity }),
+            });
+
+            const data = await response.json();
+
+            if (response.ok) {
+                setMessage('Product added to cart successfully!');
+            } else {
+                setMessage(data.error || 'Failed to add product to cart.');
+            }
+        } catch (error) {
+            setMessage('An error occurred. Please try again.' + error.message);
+        }
+    };
+
+    useEffect(() => { alert(message)}, [message])
     return (
         <div className={styles.product_content}>
 
@@ -47,7 +83,7 @@ function ProductContent({product}) {
             </div>
 
             <div className={`${styles.purchase_info} ${styles.product_content_child}`}>
-                <button type="button" className={styles.add_to_cart_btn}>
+                <button type="button" className={styles.add_to_cart_btn} onClick={handleAddToCart}>
                     Add to Cart <PiHandbagLight size={20} className={styles.add_to_cart_icon} />
                 </button>
                 <button type="button" className={styles.buy_now_btn} >

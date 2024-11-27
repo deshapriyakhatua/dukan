@@ -3,6 +3,8 @@ import User from "@/lib/models/User";
 
 export async function GET(req) {
   try {
+
+    const userId = req.headers.get('x-user-id');
     // Connect to the database
     await connectToDatabase();
 

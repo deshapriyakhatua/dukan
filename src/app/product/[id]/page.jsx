@@ -4,7 +4,7 @@ import ProductContent from '@/components/product/productContent/ProductContent';
 
 async function fetchProduct(id) {
     try {
-        const res = await fetch(`${process.env.BACKEND_URL}api/product/${id}`, {
+        const res = await fetch(`${process.env.BACKEND_URL}/api/product/${id}`, {
             next: { revalidate: 3 }, // Revalidate after 1 hour
             cache: 'force-cache', // Use cached data
         });

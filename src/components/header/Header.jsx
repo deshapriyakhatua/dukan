@@ -18,7 +18,7 @@ function Header() {
                 {
                     groupTitle: 'Home Appliances',
                     items: [
-                        { name: 'Washing Machines & Dryers', link: '/products' },
+                        { name: 'Washing Machines & Dryers', link: '/products?category=men&sub-category=shirt' },
                         { name: 'Air Conditioner', link: '#' },
                         { name: 'Fans & Air Coolers', link: '#' },
                         { name: 'Refrigerators & freezers', link: '#' },
@@ -236,9 +236,9 @@ function Header() {
                                                     <ul className={styles.dropdown__list}>
                                                         {group.items.map((item, j) => (
                                                             <li key={j}>
-                                                                <a href={item.link} className={styles.dropdown__link}>
+                                                                <Link href={item.link} className={styles.dropdown__link}>
                                                                     {item.name}
-                                                                </a>
+                                                                </Link>
                                                             </li>
                                                         ))}
                                                     </ul>
