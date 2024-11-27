@@ -17,8 +17,6 @@ const SigninPage = () => {
   const router = useRouter();
   const { isLoggedIn, setIsLoggedIn } = useAuth();
 
-  if(isLoggedIn) redirect('/');
-
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({
@@ -68,7 +66,6 @@ const SigninPage = () => {
       if (response.ok) {
         setStatusMessage("Login successful!");
         setIsLoggedIn(true);
-        // router.refresh();
       } else {
         setStatusMessage(result.error || "Invalid credentials.");
       }
@@ -80,6 +77,8 @@ const SigninPage = () => {
     }
   };
 
+  if(isLoggedIn) redirect('/');
+  
   return (
     <div className={styles.signin_container}>
       <div className={styles.formbg_outer}>

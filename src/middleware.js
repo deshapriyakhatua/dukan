@@ -31,8 +31,13 @@ export async function middleware(request) {
             break;
         }
 
-        case pathname.startsWith('/api/dashboard'): {
-            // Logic for dashboard
+        case pathname.startsWith('/auth'): {
+            const sessionCookie = request.cookies.get('session')?.value;
+
+            if (sessionCookie) {
+                // redict to home ('/')
+                return NextResponse.redirect(new URL('/', request.url));
+            }
             break;
         }
 
@@ -54,5 +59,6 @@ export async function middleware(request) {
 export const config = {
     matcher: [
         '/api/users/:path*', // Applies to all routes under /api/users
+        '/auth/:path*'
     ],
 };

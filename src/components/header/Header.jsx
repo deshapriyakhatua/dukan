@@ -7,6 +7,7 @@ import { CiSearch, CiUser, CiMenuFries } from "react-icons/ci";
 import { FaShopware } from 'react-icons/fa'
 import { PiHeartStraightLight, PiHandbagLight, PiUserCircleLight, PiUserLight } from 'react-icons/pi'
 import { useAuth } from '@/context/AuthContext';
+import Link from 'next/link';
 
 function Header() {
 
@@ -291,32 +292,33 @@ function Header() {
                                 <div className={styles.close_account_dropdown} onClick={() => { toggleAccountDropdown(false); }}></div>
                                 <div className={styles.main_nav_account_container}>
                                     {isLoggedIn ? (
-                                        <a
+                                        <Link
                                             href="/profile"
                                             id={styles.navbar_account_dropdown_login}
                                             className={styles.dropList}
                                         >
                                             Profile
-                                        </a>
+                                        </Link>
                                     ) : (
-                                        <a
+                                        <Link
                                             href="/auth/signin"
                                             id={styles.navbar_account_dropdown_login}
                                             className={styles.dropList}
                                         >
                                             LOGIN/SIGNUP
-                                        </a>
+                                        </Link>
                                     )}
-                                    <a href="#" className={styles.dropList}>
+                                    <Link href="#" className={styles.dropList}>
                                         Orders
-                                    </a>
-                                    <a href="#" className={styles.dropList}>
+                                    </Link>
+                                    <Link href="#" className={styles.dropList}>
                                         Coupons
-                                    </a>
-                                    <a href="#" className={styles.dropList}>
+                                    </Link>
+                                    <Link href="#" className={styles.dropList}>
                                         Saved Address
-                                    </a>
+                                    </Link>
                                 </div>
+
                             </div>
                         </div>
                     </section>

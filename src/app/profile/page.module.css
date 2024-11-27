@@ -2,6 +2,7 @@
     width: 100%;
     padding: 48px;
 }
+
 .mainContainer {
     margin: auto;
     max-width: 100rem;
@@ -9,21 +10,82 @@
     flex-direction: column;
     gap: 50px;
 }
+
 .firstSection {
     display: flex;
     flex-wrap: wrap;
     gap: 20px;
-    justify-content: center;
+    justify-content: flex-start;
 }
-.card {
-    min-width: 350px;
-    padding: 20px;
-    border: 1px solid gray;
+.secondSection {
     display: flex;
-    gap: 15px;
-    align-items: center;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: flex-start;
 }
 
+.card {
+    max-width: 450px;
+    min-width: 300px;
+    flex: 1;
+    padding: 40px 30px;
+    border-radius: 5px;
+    border: 1px solid #d4d4d4;
+    background-color: #ffffff;
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    /* box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px; */
+    cursor: pointer;
+    color: rgb(60, 60, 60);
+}
+.content {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+}
+
+.othersCard {
+    flex: 1;
+    max-width: 450px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 20px 15px;
+    border-radius: 5px;
+    border: 1px solid rgb(205, 205, 205);
+}
+.othersCard>div {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
 .cRow {
- display: flex;
+    display: flex;
+    gap: 10px;
+    cursor: pointer;
+}
+.cRow>p {
+    flex: 1;
+}
+
+.lastSection {
+    display: flex;
+    justify-content: flex-start;
+}
+.logoutButton {
+    flex: 1;
+    max-width: 450px;
+    padding: 7px;
+    background-color: rgb(250, 85, 85);
+    color: white;
+    border-radius: 9px;
+    font-size: 15px;
+    font-weight: 500;
+}
+
+@media screen and (max-width: 1200px) {
+    .mainPage {
+        padding: 24px;
+    }
 }

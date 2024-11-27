@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import { createContext, useState, useEffect, useContext } from "react";
 
@@ -17,8 +17,17 @@ export const AuthProvider = ({ children }) => {
     setIsLoggedIn(hasSessionCookie);
   }, []);
 
+  const deleteCookie = (name) => {
+    document.cookie = `${name}=; path=/; expires=Thu, 01 Jan 1970 00:00:00 UTC; secure; SameSite=Lax;`;
+  };
+
+  const logout = () => {
+    deleteCookie("session"); // Remove session cookie
+    setIsLoggedIn(false); // Update auth state
+  };
+
   return (
-    <AuthContext.Provider value={{ isLoggedIn, setIsLoggedIn }}>
+    <AuthContext.Provider value={{ isLoggedIn, setIsLoggedIn, logout }}>
       {children}
     </AuthContext.Provider>
   );

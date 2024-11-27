@@ -2,6 +2,8 @@
 
 import React, { useState } from "react";
 import styles from "./page.module.css";
+import { useAuth } from "@/context/AuthContext";
+import { redirect } from "next/navigation";
 
 const SignupPage = () => {
   const [formData, setFormData] = useState({
@@ -10,6 +12,7 @@ const SignupPage = () => {
   });
   const [statusMessage, setStatusMessage] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const { isLoggedIn } = useAuth();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -67,6 +70,8 @@ const SignupPage = () => {
       setIsLoading(false);
     }
   };
+
+  if(isLoggedIn) redirect('/');
 
   return (
     <div className={styles.signin_container}>

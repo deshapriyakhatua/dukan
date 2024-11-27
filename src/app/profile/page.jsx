@@ -1,3 +1,5 @@
+"use client";
+
 import React from 'react'
 import styles from './page.module.css'
 import { BsBoxFill, BsChevronRight } from 'react-icons/bs'
@@ -5,11 +7,20 @@ import { AiOutlineUser } from 'react-icons/ai'
 import { SlLocationPin } from "react-icons/sl";
 import { FaCreditCard, FaUserCog } from 'react-icons/fa';
 import { MdContactSupport } from 'react-icons/md';
+import { useAuth } from '@/context/AuthContext';
+import { redirect, useRouter } from 'next/navigation';
 
 function page() {
     const accountOptions = [
         {}
-    ]
+    ];
+    const {isLoggedIn, logout} = useAuth();
+    const router = useRouter();
+
+    console.log(isLoggedIn)
+
+    if(isLoggedIn != null && !isLoggedIn) { redirect("/auth/signin")}
+
     return (
         <div className={styles.mainPage}>
             <div className={styles.mainContainer}>
@@ -36,7 +47,7 @@ function page() {
                         </div>
                     </div>
                     <div className={styles.card}>
-                        <div className={styles.imgContainer}><MdContactSupport  size={35}/></div>
+                        <div className={styles.imgContainer}><MdContactSupport size={35} /></div>
                         <div className={styles.content}>
                             <h3>Your Orders</h3>
                             <p>Track, return or buy things agin</p>
@@ -45,7 +56,7 @@ function page() {
                 </div>
                 <div className={styles.secondSection}>
                     <div className={styles.othersCard}>
-                        <h3>Account Settings</h3>
+                        <h4>Account Settings</h4>
                         <div>
                             <div className={styles.cRow}>
                                 <AiOutlineUser />
@@ -54,13 +65,20 @@ function page() {
                             </div>
                             <div className={styles.cRow}>
                                 <SlLocationPin />
-                                <p>Edit profile</p>
+                                <p>Saved address</p>
                                 <BsChevronRight />
                             </div>
                         </div>
                     </div>
-                    <button className={styles.logoutButton}>Log out</button>
                 </div>
+
+                <div className={styles.lastSection}>
+                    <button className={styles.logoutButton} 
+                     onClick={() => {
+                         logout();
+                      }}>Log out</button>
+                </div>
+
             </div>
         </div>
     )
