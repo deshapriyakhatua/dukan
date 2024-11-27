@@ -1,0 +1,24 @@
+
+.card_wrapper{
+    max-width: var(--main-navbar-width);
+    margin: 2rem auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.card{
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: 1.5rem;
+}
+
+/* ================= responsive ===================== */
+
+@media screen and (max-width: 1200px){
+    .card{
+        display: grid;
+        grid-template-columns: repeat(1, 1fr);
+        grid-gap: 1.5rem;
+    }
+}

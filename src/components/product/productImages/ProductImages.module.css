@@ -1,0 +1,113 @@
+.product_imgs{
+    width: 100%;
+    padding-left: 16px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    gap: 20px;
+}
+.product_imgs img{
+    width: 100%;
+    display: block;
+}
+.img_display{
+    overflow: hidden;
+}
+.img_showcase{
+    width: 100%;
+    cursor: zoom-in;
+    border: 1px solid #dedede;
+}
+.img_showcase img{
+    width: 100%;
+}
+.largeImageContainer {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: white;
+    z-index: 101;
+}
+.largeImageParent {
+    padding: 5px;
+    width: max-content;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    position: relative;
+}
+.zoomedBackground {
+    height: 100%;
+    background-position: 50% 50%;
+    background-size: 200%;
+    background-position: center;
+    background-repeat: no-repeat;
+    position: relative;
+    overflow: hidden;
+    cursor: zoom-in;
+    border: 1px solid rgb(166, 166, 166);
+}
+.zoomedBackground>img {
+    max-height: 100%;
+    object-fit: contain;
+}
+.zoomedBackground>img:hover {
+    opacity: 0;
+}
+@media (max-aspect-ratio: 100/127) {
+    .zoomedBackground {
+        height: auto;
+    }
+}
+.largeImageClose {
+    position: absolute;
+    top: 35px;
+    right: 25px;
+    background-color: white;
+    width: 26px;
+    height: 26px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    z-index: 102;
+}
+
+.img_select{
+    width: 100%;
+}
+.images_slider {
+    width: 100%;
+    height: max-content;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 16px;
+    flex-wrap: wrap;
+}
+.img_item{
+    margin: 0.3rem 0;
+    height: 80px;
+    cursor: pointer;
+}
+
+.img_item:hover{
+    opacity: 0.8;
+}
+.img_item img {
+    object-fit: contain;
+    height: 100%;
+}
+
+/* ================= responsive ===================== */
+
+@media screen and (max-width: 1200px){
+    .product_imgs {
+        padding-left: 0;
+    }
+}
