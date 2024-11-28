@@ -3,7 +3,7 @@ import { decrypt } from '@/lib/session'; // Assuming decrypt is from your sessio
 
 export async function middleware(request) {
     const pathname = request.nextUrl.pathname;
-    const secureRoutes = ['/api/cart', '/api/product/add', '/api/users'];
+    const secureRoutes = ['/api/cart', '/api/product/add', '/api/users', '/api/order'];
 
     switch (true) {
         case secureRoutes.some(route => pathname.startsWith(route)): {

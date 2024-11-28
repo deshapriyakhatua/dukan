@@ -68,7 +68,7 @@ function Checkout() {
     const [address, setAddress] = useState(null);
     const [district, setDistrict] = useState(null);
     const [state, setState] = useState('');
-    const [country, setCountry] = useState(null);
+    const [country, setCountry] = useState('india');
     const [landmark, setLandmark] = useState(null);
     const [alternatePhone, setAlternatePhone] = useState(null);
 
