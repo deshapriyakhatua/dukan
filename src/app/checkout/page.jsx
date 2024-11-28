@@ -24,8 +24,39 @@ const fetchCart = async function () {
     }
 }
 
+const placeOrder = async (orderData) => {
+    try {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/order/new`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(orderData),
+        });
+
+        if (!res.ok) {
+            const errorData = await res.json();
+            throw new Error(errorData.message || 'Failed to place the order');
+        }
+
+        return res.json();
+    } catch (error) {
+        console.error(`Error placing order:`, error.message);
+        throw new Error('An error occurred while placing the order. Please try again later.');
+    }
+};
+
 function Checkout() {
 
+    const indianStates = [
+        'Andaman and Nicobar Islands', 'Andhra Pradesh', 'Arunachal Pradesh', 'Assam',
+        'Bihar', 'Chandigarh', 'Chhattisgarh', 'Dadra and Nagar Haveli and Daman and Diu',
+        'Delhi', 'Goa', 'Gujarat', 'Haryana', 'Himachal Pradesh', 'Jammu and Kashmir',
+        'Jharkhand', 'Karnataka', 'Kerala', 'Ladakh', 'Lakshadweep', 'Madhya Pradesh',
+        'Maharashtra', 'Manipur', 'Meghalaya', 'Mizoram', 'Nagaland', 'Odisha',
+        'Puducherry', 'Punjab', 'Rajasthan', 'Sikkim', 'Tamil Nadu', 'Telangana',
+        'Tripura', 'Uttar Pradesh', 'Uttarakhand', 'West Bengal'
+    ].sort();
     const [isCashOnDelivery, setIsCashOnDelivery] = useState(true);
     const [cartItems, setCartItems] = useState(null);
     const [totalPrice, setTotalPrice] = useState(null);
@@ -36,7 +67,7 @@ function Checkout() {
     const [locality, setLocality] = useState(null);
     const [address, setAddress] = useState(null);
     const [district, setDistrict] = useState(null);
-    const [state, setState] = useState(null);
+    const [state, setState] = useState('');
     const [country, setCountry] = useState(null);
     const [landmark, setLandmark] = useState(null);
     const [alternatePhone, setAlternatePhone] = useState(null);
@@ -56,26 +87,44 @@ function Checkout() {
 
         fetchData();
     }, [])
-    const products = [
-        {
-            imgSrc: 'https://apisap.fabindia.com/medias/20174793-01.jpg?context=bWFzdGVyfGltYWdlc3wxNjMzMDJ8aW1hZ2UvanBlZ3xhREF5TDJnMU1pODFNakl4T1Rnd01UZ3lPVFF3Tmk4eU1ERTNORGM1TTE4d01TNXFjR2N8YmZkMWQ4YWRlMDM3YjMxMTAxYjQ3ZGJlZmUxYjQyNjM4NTgxZmI2MTNhM2ZmOTIzZTdjN2YzYmQ1MDc1N2EyMA',
-            title: 'Latest Colored shirt',
-            price: 250,
-            qnty: 20
-        },
-        {
-            imgSrc: 'https://apisap.fabindia.com/medias/20174793-02.jpg?context=bWFzdGVyfGltYWdlc3wxMjA4ODJ8aW1hZ2UvanBlZ3xhRFJsTDJoaE55ODFNakl4T1Rnd01qSXlNall5TWk4eU1ERTNORGM1TTE4d01pNXFjR2N8OTBkMmZmNDBiMDJjYjEyMGY5OTFlMGFiNmM0MzJjZmRlMWRiYzMyZDgyZGMyMDlhYjFlOTcyODBkYjkwNzRkMw',
-            title: 'Latest Colored shirt',
-            price: 542,
-            qnty: 1
-        },
-        {
-            imgSrc: 'https://apisap.fabindia.com/medias/20174793-03.jpg?context=bWFzdGVyfGltYWdlc3wxNTk1Nzh8aW1hZ2UvanBlZ3xhRE16TDJoaU5TODFNakl4T1Rnd01qWTBPRFl3Tmk4eU1ERTNORGM1TTE4d015NXFjR2N8ZGI1YzdlOTkyMzgxYjVmZjAyM2JhNjBkN2Y1ZGZlZTRkOTYzM2JjMDc2MWVkNGVmZmI2ZjQ0NGU3N2E5N2M5OQ',
-            title: 'Latest Colored shirt',
-            price: 354,
-            qnty: 5
-        },
-    ];
+    
+    const handlePlaceOrder = async () => {
+        if (!fullName || !phone || !pincode || !locality || !address || !district || !state) {
+            alert('Please fill out all required fields');
+            return;
+        }
+
+        try {
+            const orderData = {
+                address: {
+                    fullName,
+                    phone,
+                    pincode,
+                    locality,
+                    address,
+                    district,
+                    state,
+                    country,
+                    landmark,
+                    alternatePhone,
+                },
+                paymentMethod: isCashOnDelivery ? 'cash_on_delivery' : 'online',
+            };
+
+            const response = await placeOrder(orderData);
+
+            if (response.success) {
+                alert('Order placed successfully!');
+                setCartItems([]); // Clear cart items in UI
+                setTotalPrice(0); // Reset total price
+            } else {
+                alert('Failed to place order');
+            }
+        } catch (error) {
+            console.error(error);
+            alert('An error occurred while placing the order. Please try again later.');
+        }
+    };
 
     return (
         <section className={styles.mainContainer}>
@@ -88,40 +137,51 @@ function Checkout() {
                         <h1>Address</h1>
                         <div className={styles.inputContainer}>
                             <label htmlFor="fullName">First Name</label>
-                            <input id='fullName' placeholder='Full Name' />
+                            <input id='fullName' placeholder='Full Name' onChange={(event) => { setFullName(event.target.value) }} />
                         </div>
                         <div className={styles.inputsContainer}>
                             <div className={styles.inputContainer}>
                                 <label htmlFor="locality">Locality</label>
-                                <input id='locality' placeholder='Locality' />
+                                <input id='locality' placeholder='Locality' onChange={(event) => { setLocality(event.target.value) }} />
                             </div>
                             <div className={styles.inputContainer}>
                                 <label htmlFor="pincode">Pincode</label>
-                                <input id='pincode' placeholder='Pincode' />
+                                <input id='pincode' placeholder='Pincode' onChange={(event) => { setPincode(event.target.value) }} />
                             </div>
                         </div>
                         <div className={styles.inputsContainer}>
                             <div className={styles.inputContainer}>
                                 <label htmlFor="address">Address (Area & Street)</label>
-                                <input id='address' placeholder='Area, Street, Apartment, suite, etc.' />
+                                <textarea name="address" id='address' placeholder='Area, Street, Apartment, suite, etc.' onChange={(event) => { setAddress(event.target.value) }}></textarea>
                             </div>
                             <div className={styles.inputContainer}>
                                 <label htmlFor="landmark">Landmark</label>
-                                <input id='landmark' placeholder='Landmark' />
+                                <input id='landmark' placeholder='Landmark (Optional)' onChange={(event) => { setLandmark(event.target.value) }} />
                             </div>
                         </div>
                         <div className={styles.inputsContainer}>
                             <div className={styles.inputContainer}>
                                 <label htmlFor="city">City/District/Town</label>
-                                <input id='city' placeholder='City' />
+                                <input id='city' placeholder='City' onChange={(event) => { setDistrict(event.target.value) }} />
                             </div>
                             <div className={styles.inputContainer}>
                                 <label htmlFor="state">State</label>
-                                <input id='state' placeholder='State' />
+                                <select
+                                    id="state"
+                                    value={state}
+                                    onChange={(event) => setState(event.target.value)}
+                                >
+                                    <option value="" disabled>Select</option>
+                                    {indianStates.map((state, index) => (
+                                        <option key={index} value={state}>
+                                            {state}
+                                        </option>
+                                    ))}
+                                </select>
                             </div>
                             <div className={styles.inputContainer}>
                                 <label htmlFor="country">Country</label>
-                                <input id='country' placeholder='Country' />
+                                <input id='country' placeholder='Country' value={'India'} disabled />
                             </div>
                         </div>
                         <div className={styles.checkboxContainer}>
@@ -135,11 +195,11 @@ function Checkout() {
                         <div className={styles.inputsContainer}>
                             <div className={styles.inputContainer}>
                                 <label htmlFor="phone">Phone</label>
-                                <input id='phone' placeholder='Phone' />
+                                <input id='phone' placeholder='Phone' onChange={(event) => { setPhone(event.target.value) }} />
                             </div>
                             <div className={styles.inputContainer}>
                                 <label htmlFor="altphone">Alternate Phone (optional)</label>
-                                <input id='altphone' placeholder='Alternate Phone (optional)' />
+                                <input id='altphone' placeholder='Alternate Phone (optional)' onChange={(event) => { setAlternatePhone(event.target.value) }} />
                             </div>
                         </div>
                     </div>
@@ -195,7 +255,7 @@ function Checkout() {
                     </div>
 
                     <div className={styles.placeOrderButton}>
-                        <button>Place Order</button>
+                        <button onClick={handlePlaceOrder}>Place Order</button>
                     </div>
 
                 </div>

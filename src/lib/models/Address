@@ -74,4 +74,4 @@ const AddressSchema = new mongoose.Schema({
   timestamps: true, // Adds createdAt and updatedAt fields
 });
 
-module.exports = mongoose.model('Address', AddressSchema);
+module.exports = mongoose.models.Address || mongoose.model('Address', AddressSchema);
