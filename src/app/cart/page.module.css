@@ -21,8 +21,10 @@
 }
 .main_cart_section .card_holder_title {
     padding: 1rem;
-    text-decoration: underline;
     text-decoration-color: rgb(232, 1, 39);
+}
+.card_holder_title>span {
+    font-size: 15px;
 }
 .main_cart_section .card_parent {
     width: 100%;
