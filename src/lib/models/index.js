@@ -1,5 +1,5 @@
-export * from "./Address";
-export * from "./Cart";
-export * from "./Order";
-export * from "./Product";
-export * from "./User";
+module.exports = "./Address";
+module.exports =  "./Cart";
+module.exports =  "./Order";
+module.exports =  "./Product";
+module.exports =  "./User";
