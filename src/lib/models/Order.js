@@ -18,7 +18,7 @@ const orderSchema = new mongoose.Schema({
   user: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
   subOrders: [subOrderSchema], // Embed sub-orders
   totalPrice: { type: Number, required: true }, // Sum of sub-orders
-  shippingAddress: { type: String, required: true },
+  shippingAddress: { type: mongoose.Schema.Types.ObjectId, ref: 'Address', required: true },
   paymentMethod: {
     type: String,
     enum: ['online', 'cash_on_delivery'],

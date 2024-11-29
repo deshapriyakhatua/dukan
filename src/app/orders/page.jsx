@@ -74,14 +74,10 @@ function Order() {
                                             <h2 className={styles.card_title}>{product?.product?.name}</h2>
                                         </div>
                                         <div className={styles.card_details_child}>
-                                            <p>Hodie_B</p>
+                                            <p>Status: Ready to Ship</p>
                                         </div>
                                         <div className={styles.card_details_child}>
-                                            <p><span>Color : </span><span>Blue</span></p>
-                                        </div>
-                                        <div className={styles.card_details_child}>
-                                            <p><span>Size : </span><span>M</span></p>
-                                            <p className={styles.pack_note}>Quantity(<span> {product.quantity} </span>)</p>
+                                            <p><span>Quantity : </span><span>{product.quantity}</span></p>
                                         </div>
                                         <div className={styles.card_details_child}>
                                             <div className={styles.edit_button_parent}>
