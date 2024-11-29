@@ -3,6 +3,7 @@ import "./globals.css";
 import Header from "@/components/header/Header";
 import Footer from "@/components/footer/Footer";
 import { AuthProvider } from "@/context/AuthContext";
+import { Suspense } from "react";
 
 
 const montserrat = Montserrat({
@@ -21,9 +22,11 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <AuthProvider>
         <body className={` ${montserrat.variable}`}>
-          <Header />
-          {children}
-          <Footer />
+          <Suspense fallback={null}>
+            <Header />
+            {children}
+            <Footer />
+          </Suspense>
         </body>
       </AuthProvider>
     </html>
