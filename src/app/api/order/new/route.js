@@ -2,6 +2,7 @@ import connectToDatabase from '@/lib/mongoose';
 import Order from '@/lib/models/Order';
 import Cart from '@/lib/models/Cart';
 import Address from '@/lib/models/Address';
+import Product from '@/lib/models/Product';
 
 export async function POST(req) {
   try {
