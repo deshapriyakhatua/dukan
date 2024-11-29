@@ -290,7 +290,7 @@ function Header() {
                             </div>
                             <div className={`${styles.navbar_account_dropdown} ${isAccountOpened && styles.visible_dropdown}`}>
                                 <div className={styles.close_account_dropdown} onClick={() => { toggleAccountDropdown(false); }}></div>
-                                <div className={styles.main_nav_account_container}>
+                                <div className={styles.main_nav_account_container} onClick={() => { toggleAccountDropdown(false); }}>
 
                                     {isLoggedIn ? (
                                         <Link
@@ -309,7 +309,7 @@ function Header() {
                                         </Link>
                                     )}
 
-                                    {isLoggedIn && (<Link href="#" className={styles.dropList}>
+                                    {isLoggedIn && (<Link href="/orders" className={styles.dropList}>
                                         Orders
                                     </Link>
                                     )}

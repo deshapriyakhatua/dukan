@@ -1,15 +1,14 @@
-
 import connectToDatabase from '@/lib/mongoose';
 import Order from '@/lib/models/Order';
 import Cart from '@/lib/models/Cart';
-import Address from '@/lib/models/Address'
+import Address from '@/lib/models/Address';
 
 export async function POST(req) {
   try {
     await connectToDatabase(); // Ensure DB connection
 
     const userId = req.headers.get('x-user-id');
-    const {  address, paymentMethod } = await req.json();
+    const { address, paymentMethod } = await req.json();
 
     // Step 1: Save address to the Address schema
     const newAddress = await Address.create({
@@ -26,23 +25,30 @@ export async function POST(req) {
       });
     }
 
-    // Calculate total price
-    const totalPrice = cart.items.reduce(
-      (sum, item) => sum + item.product.price * item.quantity,
+    // Step 3: Build `subOrders` and calculate the total price
+    const subOrders = cart.items.map(item => ({
+      product: item.product._id,
+      quantity: item.quantity,
+      price: item.product.price,
+      seller: item.product.seller,
+      status: 'pending', // Default status for new sub-orders
+    }));
+
+    const totalPrice = subOrders.reduce(
+      (sum, subOrder) => sum + subOrder.price * subOrder.quantity,
       0
     );
 
-    // Step 3: Move products to Order schema
+    // Step 4: Create a new order
     const newOrder = await Order.create({
       user: userId,
-      products: cart.items,
+      subOrders,
       totalPrice,
-      status: 'pending',
       shippingAddress: newAddress._id, // Save address ID
       paymentMethod,
     });
 
-    // Step 4: Clear the user's cart
+    // Step 5: Clear the user's cart
     await Cart.findOneAndUpdate({ user: userId }, { items: [] });
 
     return new Response(

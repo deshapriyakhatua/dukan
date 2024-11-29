@@ -1,0 +1,157 @@
+.main_cart_section {
+    width: 100%;
+    padding: 48px;
+}
+
+.main_cart_section .main_cart_parent {
+    max-width: 100rem;
+    margin: auto;
+}
+
+.main_cart_section .card_holder {
+    width: 100%;
+}
+
+.main_cart_section .card_holder_title {
+    padding: 1rem 0;
+}
+
+.card_holder_title > span {
+    font-size: 15px;
+}
+
+.main_cart_section .card_parent {
+    padding: 30px 10px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid #cacaca;
+}
+
+.main_cart_section .card {
+    width: 100%;
+    padding: 1rem 1rem;
+    display: flex;
+    gap: 1rem;
+    box-shadow: rgba(17, 17, 26, 0.1) 0px 1px 0px;
+}
+
+.main_cart_section .card_image_container {
+    width: 150px;
+}
+
+.main_cart_section .card_image {
+    width: 100%;
+    aspect-ratio: 2/3;
+    object-fit: cover;
+    border-radius: 0.5rem;
+}
+
+.main_cart_section .card_details {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.main_cart_section .card_details_child {
+    width: 100%;
+    padding: 0.5rem 0;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.main_cart_section .card_details_child .card_title {
+    font-size: 1rem;
+    font-weight: 600;
+}
+
+.main_cart_section .card_details_child .pack_note {
+    font-size: 0.7rem;
+    font-weight: 500;
+}
+
+.main_cart_section .edit_button_parent {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 2rem;
+}
+
+.main_cart_section .edit_button_parent button {
+    padding: 0.4rem 0.7rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.4rem;
+    background-color: white;
+    border: 1px solid rgb(222, 222, 222);
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+}
+
+.main_cart_section .edit_button_parent button:active {
+    background-color: rgb(231, 231, 231);
+    border: 1px solid rgb(180, 180, 180);
+}
+
+.main_cart_section .edit_button_parent button span {
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+.main_cart_section .card_details_child .price_parent h3 {
+    font-weight: 400;
+}
+
+@media screen and (max-width: 1200px) {
+    .main_cart_section {
+        padding: 24px;
+    }
+}
+
+@media screen and (max-width: 780px) {
+    .main_cart_section .card_holder_title {
+        padding: 0 1rem;
+        font-size: 0.9rem;
+        font-weight: 500;
+    }
+
+    .main_cart_section .card {
+        padding: 1rem;
+    }
+
+    .main_cart_section .card_details_child {
+        padding: 0.2rem 1rem;
+    }
+
+    .main_cart_section .card_details_child .card_title {
+        font-weight: 500;
+        font-size: 90%;
+    }
+
+    .main_cart_section .card_details_child .pack_note {
+        font-size: 0.7rem;
+    }
+
+    .main_cart_section .card_details_child p {
+        font-weight: 300;
+        font-size: 80%;
+    }
+
+    .main_cart_section .edit_button_parent {
+        gap: 1rem;
+    }
+
+    .main_cart_section .edit_button_parent button {
+        padding: 0.3rem;
+        border-radius: 50%;
+    }
+
+    .main_cart_section .card_details_child .edit_button_parent .move_to_wishlist_button_text {
+        display: none;
+    }
+}
