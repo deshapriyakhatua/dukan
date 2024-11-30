@@ -1,4 +1,5 @@
-import Order from "@/lib/models/Order";
+import Order from "@/models/Order";
+import Product from "@/models/Product";
 import connectToDatabase from "@/lib/mongoose";
 
 

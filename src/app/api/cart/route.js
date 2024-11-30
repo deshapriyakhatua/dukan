@@ -1,7 +1,8 @@
 import { NextResponse } from 'next/server';
 import mongoose from 'mongoose';
 import connectToDatabase from '@/lib/mongoose';
-import Cart from '@/lib/models/Cart';
+import Cart from '@/models/Cart';
+import Product from '@/models/Product';
 
 export async function GET(req) {
   try {

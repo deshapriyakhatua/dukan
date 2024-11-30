@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 import mongoose from 'mongoose';
 import connectToDatabase from '@/lib/mongoose';
-import Cart from '@/lib/models/Cart';
+import Cart from '@/models/Cart';
 
 export async function POST(req) {
   try {

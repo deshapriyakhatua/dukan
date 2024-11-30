@@ -1,4 +1,7 @@
-import Order from '@/lib/models/Order';
+import Order from '@/models/Order';
+import Product from '@/models/Product';
+import User from '@/models/User';
+import Address from '@/models/Address';
 import connectToDatabase from '@/lib/mongoose';
 
 export async function GET(req) {

@@ -1,4 +1,4 @@
-import Product from "@/lib/models/Product";
+import Product from "@/models/Product";
 import connectToDatabase from "@/lib/mongoose";
 
 export async function GET(request) {

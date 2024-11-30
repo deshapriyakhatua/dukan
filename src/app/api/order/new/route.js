@@ -1,8 +1,8 @@
 import connectToDatabase from '@/lib/mongoose';
-import Order from '@/lib/models/Order';
-import Cart from '@/lib/models/Cart';
-import Address from '@/lib/models/Address';
-import Product from '@/lib/models/Product';
+import Order from '@/models/Order';
+import Cart from '@/models/Cart';
+import Address from '@/models/Address';
+import Product from '@/models/Product';
 
 export async function POST(req) {
   try {

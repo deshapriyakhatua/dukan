@@ -10,10 +10,7 @@ import { useRouter } from 'next/navigation';
 const fetchCart = async function () {
     try {
 
-        const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/cart`, {
-            next: { revalidate: 3 }, // Revalidate after 1 hour
-            cache: 'force-cache', // Use cached data
-        });
+        const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/cart`);
 
         if (!res.ok) {
             // Extract and throw server-provided error message if available
