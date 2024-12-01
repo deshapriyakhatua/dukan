@@ -46,7 +46,7 @@
     border-radius: .5rem;
 }
 .main_cart_section .card_details {
-    width: 100%;
+    flex: 1;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
@@ -170,6 +170,7 @@
 .main_cart_section .discount_code_cart {
     padding: 1rem;
     display: flex;
+    display: none;
     flex-direction: column;
     justify-content: center;
     align-items: flex-start;
@@ -225,6 +226,10 @@
     .main_cart_section .card {
         padding: 1rem 0;
         gap: .3rem;
+    }
+    .main_cart_section .card_image_container {
+        width: 100px;
+        height: 150px;
     }
     .main_cart_section .card_details_child {
         padding: .2rem 1rem;

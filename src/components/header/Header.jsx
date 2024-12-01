@@ -271,12 +271,12 @@ function Header() {
                                 </div>
                             </div>
                         </div>
-                        <div className={styles.navbar_profile_child}>
+                        {/* <div className={styles.navbar_profile_child}>
                             <div className={styles.navbar_profile_child_title}>
                                 <Link className={styles.show_wishlist_dropdown_button} href="/wishlist" title='Wish list'></Link>
                                 <PiHeartStraightLight className={styles.navbar_profile_icons} />
                             </div>
-                        </div>
+                        </div> */}
                         <div className={styles.navbar_profile_child}>
                             <div className={styles.navbar_profile_child_title}>
                                 <Link className={styles.show_cart_dropdown_button} href="/cart" title="Cart"></Link>

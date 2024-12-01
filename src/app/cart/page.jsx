@@ -18,12 +18,57 @@ const fetchCart = async function () {
             throw new Error(errorData.message || 'Failed to fetch product');
         }
 
-        return res.json();
+        return await res.json();
     } catch (error) {
         console.error(`Error fetching products:`, error.message);
         throw new Error('An error occurred while fetching the product. Please try again later.');
     }
 };
+
+const updateProductQuantity = async function (productId, action) {
+    try {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/cart/updateQuantity`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ productId, action }),
+        });
+
+        if (!res.ok) {
+            const errorData = await res.json();
+            throw new Error(errorData.message || 'Failed to fetch product');
+        }
+
+        return await res.json();
+    } catch (error) {
+        console.error(`Error updating product quantity:`, error.message);
+        throw new Error('An error occurred while updating product quantity. Please try again later.');
+    }
+};
+
+const removeProduct = async function (productId) {
+    try {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/cart/remove`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ productId }),
+        });
+
+        if (!res.ok) {
+            const errorData = await res.json();
+            throw new Error(errorData.message || 'Failed to fetch product');
+        }
+
+        return await res.json();
+    } catch (error) {
+        console.error(`Error removing products:`, error.message);
+        throw new Error('An error occurred while removing the product. Please try again later.');
+    }
+};
+
 
 function Cart() {
     const router = useRouter();
@@ -34,6 +79,7 @@ function Cart() {
     useEffect(() => {
         async function fetchData() {
             const data = await fetchCart();
+            console.log(data)
             setCartItems(data?.items || []);
             calculateTotalPrice(data?.items || []);
         }
@@ -46,21 +92,30 @@ function Cart() {
         setTotalPrice(total);
     };
 
-    const handleIncrement = (index) => {
+    const handleIncrement = (index, productId) => {
         const updatedCartItems = [...cartItems];
         updatedCartItems[index].quantity += 1;
         setCartItems(updatedCartItems);
         calculateTotalPrice(updatedCartItems);
+        updateProductQuantity(productId, 'increment');
     };
 
-    const handleDecrement = (index) => {
+    const handleDecrement = (index, productId) => {
         const updatedCartItems = [...cartItems];
         if (updatedCartItems[index].quantity > 1) {
             updatedCartItems[index].quantity -= 1;
             setCartItems(updatedCartItems);
             calculateTotalPrice(updatedCartItems);
+            updateProductQuantity(productId, 'decrement');
         }
     };
+
+    const handleRemoveProduct = (index, productId) => {
+        const updatedCartItems = [...cartItems].filter((item, indx) => productId !== item?.product?._id );
+        setCartItems(updatedCartItems);
+        calculateTotalPrice(updatedCartItems);
+        removeProduct(productId);
+    }
 
     return (
         <section className={styles.main_cart_section}>
@@ -88,7 +143,8 @@ function Cart() {
                                                 <button
                                                     type="button"
                                                     className={styles.btn_quantity_decrease}
-                                                    onClick={() => handleDecrement(index)}
+                                                    onClick={() => handleDecrement(index, product?.product?._id)}
+                                                    title='Decrement'
                                                 >
                                                     −
                                                 </button>
@@ -96,7 +152,8 @@ function Cart() {
                                                 <button
                                                     type="button"
                                                     className={styles.btn_quantity_increase}
-                                                    onClick={() => handleIncrement(index)}
+                                                    onClick={() => handleIncrement(index, product?.product?._id)}
+                                                    title='Increment'
                                                 >
                                                     +
                                                 </button>
@@ -107,14 +164,17 @@ function Cart() {
                                         </div>
                                         <div className={styles.card_details_child}>
                                             <div className={styles.edit_button_parent}>
-                                                <button className={styles.remove_button}>
+                                                <button 
+                                                className={styles.remove_button} 
+                                                title='Remove From Cart' 
+                                                onClick={() => { handleRemoveProduct(index, product?.product?._id)}}>
                                                     <AiOutlineDelete />
                                                     <span className={styles.move_to_wishlist_button_text}> Remove</span>
                                                 </button>
-                                                <button className={styles.move_to_wishlist_button}>
+                                                {/* <button className={styles.move_to_wishlist_button} title='Add To WishList'>
                                                     <PiHeartStraightLight />
                                                     <span className={styles.move_to_wishlist_button_text}> Favourite</span>
-                                                </button>
+                                                </button> */}
                                             </div>
                                             <div className={styles.price_parent}>
                                                 <h3>{product?.product?.price} Rs.</h3>

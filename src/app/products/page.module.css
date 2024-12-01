@@ -65,6 +65,7 @@
 /* ======= Category Uri ======= */
 
 .category_uri {
+    display: none;
     width: 100%;
     padding: 10px var(--padding-inline);
 }
@@ -131,6 +132,7 @@
     height: 60px;
     padding: 0;
     display: flex;
+    display: none;
     align-items: center;
     justify-content: space-between;
 }
@@ -410,6 +412,7 @@
 }
 
 .product__similar {
+    display: none;
     position: absolute;
     bottom: 5px;
     right: 5px;
@@ -481,6 +484,7 @@
 
 .product__wishlist {
     display: flex;
+    display: none;
     align-items: center;
     gap: 5px;
 }

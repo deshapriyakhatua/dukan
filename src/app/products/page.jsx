@@ -32,7 +32,7 @@ function Products() {
     const searchParams = useSearchParams();
     const category = searchParams.get('category');
     const subCategory = searchParams.get('sub-category');
-    const [products, setProducts] = useState([]);
+    const [products, setProducts] = useState(null);
     const router = useRouter();
     const [isFilterOptionsVisible, setIsFilterOptionsVisible] = useState(false);
     const [isSortOptionsVisible, setIsSortOptionsVisible] = useState(false);
@@ -80,8 +80,8 @@ function Products() {
             </div>
             <div className={styles.search_bash}>
                 <div className={styles.search_bash__items}>
-                    <div className={styles.search_bash__item}>Shirts For Men &amp; Women</div>
-                    <div className={styles.search_bash__item}>101148 items</div>
+                    {/* <div className={styles.search_bash__item}>Shirts For Men &amp; Women</div> */}
+                    {products && (<div className={styles.search_bash__item}>{products.length} items</div>)}
                 </div>
             </div>
             <div className={styles.main_product_filter_sort}>
