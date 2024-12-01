@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import styles from "./page.module.css";
 import { useAuth } from "@/context/AuthContext";
 import { redirect } from "next/navigation";
+import { toast } from "sonner";
 
 const SignupPage = () => {
   const [formData, setFormData] = useState({
@@ -32,16 +33,19 @@ const SignupPage = () => {
       const { phone, password } = formData;
       if (!phone || !password) {
         setStatusMessage("Phone and Password are required.");
+        toast.warning("Phone and Password are required.");
         setIsLoading(false);
         return;
       }
       if (phone.length < 10) {
         setStatusMessage("Phone number must be 10 digits.");
+        toast.warning("Phone number must be 10 digits.");
         setIsLoading(false);
         return;
       }
       if (password.length < 6) {
         setStatusMessage("Password must be at least 6 characters.");
+        toast.warning("Password must be at least 6 characters.");
         setIsLoading(false);
         return;
       }
@@ -59,13 +63,16 @@ const SignupPage = () => {
 
       if (response.ok) {
         setStatusMessage("User signed up successfully!");
+        toast.success("User signed up successfully!");
         setFormData({ phone: "", password: "" }); // Reset form
       } else {
         setStatusMessage(result.error || "Something went wrong.");
+        toast.error(result.error || "Something went wrong.");
       }
     } catch (error) {
       console.error("Sign up error:", error);
       setStatusMessage("An unexpected error occurred.");
+      toast.error("An unexpected error occurred.");
     } finally {
       setIsLoading(false);
     }

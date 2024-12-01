@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import styles from "./page.module.css";
 import { redirect, useRouter } from "next/navigation";
 import { useAuth } from "@/context/AuthContext";
+import { toast } from "sonner";
 
 
 const SigninPage = () => {
@@ -36,18 +37,21 @@ const SigninPage = () => {
       // Client-side validation
       if (!phone || !password) {
         setStatusMessage("Phone and Password are required.");
+        toast.warning("Phone and Password are required.");
         setIsLoading(false);
         return;
       }
 
       if (phone.length !== 10 || !/^\d+$/.test(phone)) {
         setStatusMessage("Phone number must be 10 digits.");
+        toast.warning("Phone number must be 10 digits.");
         setIsLoading(false);
         return;
       }
 
       if (password.length < 6) {
         setStatusMessage("Password must be at least 6 characters.");
+        toast.warning("Password must be at least 6 characters.");
         setIsLoading(false);
         return;
       }
@@ -66,19 +70,22 @@ const SigninPage = () => {
       if (response.ok) {
         setStatusMessage("Login successful!");
         setIsLoggedIn(true);
+        toast.success('Login successful!');
       } else {
         setStatusMessage(result.error || "Invalid credentials.");
+        toast.error('Invalid credentials.!');
       }
     } catch (error) {
       console.error("Sign-in error:", error);
       setStatusMessage("An unexpected error occurred.");
+      toast.error('An unexpected error occurred.!');
     } finally {
       setIsLoading(false);
     }
   };
 
-  if(isLoggedIn) redirect('/');
-  
+  if (isLoggedIn) redirect('/');
+
   return (
     <div className={styles.signin_container}>
       <div className={styles.formbg_outer}>

@@ -4,7 +4,7 @@ import Header from "@/components/header/Header";
 import Footer from "@/components/footer/Footer";
 import { AuthProvider } from "@/context/AuthContext";
 import { Suspense } from "react";
-
+import { Toaster } from 'sonner';
 
 const montserrat = Montserrat({
   subsets: ["cyrillic", "cyrillic-ext", "latin", "latin-ext", "vietnamese"],
@@ -26,6 +26,11 @@ export default function RootLayout({ children }) {
             <Header />
             {children}
             <Footer />
+            <Toaster
+              position="top-right"
+              richColors={true}
+              expand={true}
+              closeButton={true} />
           </Suspense>
         </body>
       </AuthProvider>

@@ -6,6 +6,7 @@ import { PiHandbagLight } from 'react-icons/pi'
 import { FaOpencart } from 'react-icons/fa';
 import { IoStarHalfOutline } from 'react-icons/io5';
 import { useRouter } from 'next/navigation';
+import { toast } from 'sonner';
 
 function ProductContent({ product }) {
 
@@ -17,8 +18,8 @@ function ProductContent({ product }) {
     const [addToCartLoading, setAddToCartLoading] = useState(false);
 
     const handleAddToCart = async (buttonType) => {
-        if(buttonType === 'add_to_cart') setAddToCartLoading(true);
-        if(buttonType === 'buy_now') setBuyNowLoading(true);
+        if (buttonType === 'add_to_cart') setAddToCartLoading(true);
+        if (buttonType === 'buy_now') setBuyNowLoading(true);
         setMessage(''); // Clear previous messages
 
         if (!productId || quantity < 1) {
@@ -39,19 +40,25 @@ function ProductContent({ product }) {
 
             if (response.ok) {
                 setMessage('Product added to cart successfully!');
-                if(buttonType === 'buy_now') router.push('/cart');
+                if (buttonType === 'buy_now') router.push('/cart');
             } else {
                 setMessage(data.error || 'Failed to add product to cart.');
             }
         } catch (error) {
             setMessage('An error occurred. Please try again.' + error.message);
         } finally {
-            if(buttonType === 'add_to_cart') setAddToCartLoading(false);
-            if(buttonType === 'buy_now') setBuyNowLoading(false);
+            if (buttonType === 'add_to_cart') setAddToCartLoading(false);
+            if (buttonType === 'buy_now') setBuyNowLoading(false);
         }
     };
 
-    useEffect(() => { if(message) { alert(message)} }, [message])
+    useEffect(() => {
+        if (message) {
+            toast.success(message, {
+                position: 'top-right',
+            })
+        }
+    }, [message])
     return (
         <div className={styles.product_content}>
 
@@ -94,13 +101,13 @@ function ProductContent({ product }) {
 
             <div className={`${styles.purchase_info} ${styles.product_content_child}`}>
                 <button type="button" className={styles.add_to_cart_btn} onClick={() => { handleAddToCart('add_to_cart'); }}>
-                    { !addToCartLoading ? 'Add to Cart' : 'Adding to cart...'} <PiHandbagLight size={20} className={styles.add_to_cart_icon} />
+                    {!addToCartLoading ? 'Add to Cart' : 'Adding to cart...'} <PiHandbagLight size={20} className={styles.add_to_cart_icon} />
                 </button>
-                <button type="button" className={styles.buy_now_btn} 
-                onClick={() => {
-                    handleAddToCart('buy_now');
-                }} >
-                { !buyNowLoading ? 'Buy Now' : 'Adding to cart...'}<FaOpencart size={20} className={styles.add_to_cart_icon} />
+                <button type="button" className={styles.buy_now_btn}
+                    onClick={() => {
+                        handleAddToCart('buy_now');
+                    }} >
+                    {!buyNowLoading ? 'Buy Now' : 'Adding to cart...'}<FaOpencart size={20} className={styles.add_to_cart_icon} />
                 </button>
             </div>
 

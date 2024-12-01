@@ -6,6 +6,8 @@ import { RiDeleteBin5Line } from 'react-icons/ri';
 import { PiHeartStraightLight } from 'react-icons/pi';
 import { AiOutlineDelete } from 'react-icons/ai';
 import { useRouter } from 'next/navigation';
+import { toast } from 'sonner';
+import Loading from '../loading';
 
 const fetchCart = async function () {
     try {
@@ -111,11 +113,22 @@ function Cart() {
     };
 
     const handleRemoveProduct = (index, productId) => {
-        const updatedCartItems = [...cartItems].filter((item, indx) => productId !== item?.product?._id );
-        setCartItems(updatedCartItems);
-        calculateTotalPrice(updatedCartItems);
-        removeProduct(productId);
+        try {
+            const updatedCartItems = [...cartItems].filter((item, indx) => productId !== item?.product?._id );
+            setCartItems(updatedCartItems);
+            calculateTotalPrice(updatedCartItems);
+            removeProduct(productId);
+            toast.success('Item removed successfully!', {
+                position: 'top-right',
+            })
+        } catch (error) {
+            toast.error('Error removing item from cart!', {
+                position: 'top-right',
+            })
+        }
     }
+
+    if (!cartItems) return <Loading />;
 
     return (
         <section className={styles.main_cart_section}>

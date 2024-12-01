@@ -236,7 +236,7 @@ function Header() {
                                                     <ul className={styles.dropdown__list}>
                                                         {group.items.map((item, j) => (
                                                             <li key={j}>
-                                                                <Link href={item.link} className={styles.dropdown__link}>
+                                                                <Link href={item.link} className={styles.dropdown__link} onClick={toggleMenuButton}>
                                                                     {item.name}
                                                                 </Link>
                                                             </li>

@@ -185,7 +185,10 @@
     background-color: var(--button-background);
     border-radius: 5px;
 }
-
+.disabled {
+    opacity: .5;
+    cursor: default;
+}
 .emptyCartContainer {
     max-width: 100rem;
     margin: 100px auto;

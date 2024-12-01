@@ -2,6 +2,8 @@
 
 import React, { useEffect, useState } from 'react'
 import styles from './page.module.css'
+import { toast } from 'sonner';
+import { useRouter } from 'next/navigation';
 
 const fetchCart = async function () {
     try {
@@ -70,6 +72,7 @@ function Checkout() {
     const [country, setCountry] = useState('india');
     const [landmark, setLandmark] = useState(null);
     const [alternatePhone, setAlternatePhone] = useState(null);
+    const router = useRouter();
 
     useEffect(() => {
         async function fetchData() {
@@ -89,7 +92,9 @@ function Checkout() {
 
     const handlePlaceOrder = async () => {
         if (!fullName || !phone || !pincode || !locality || !address || !district || !state) {
-            alert('Please fill out all required fields');
+            toast.error('Please fill out all required fields', {
+                position: 'top-right',
+            })
             return;
         }
 
@@ -113,15 +118,22 @@ function Checkout() {
             const response = await placeOrder(orderData);
 
             if (response.success) {
-                alert('Order placed successfully!');
+                toast.success('Order placed successfully!', {
+                    position: 'top-right',
+                })
+                router.replace('/orders');
                 setCartItems([]); // Clear cart items in UI
                 setTotalPrice(0); // Reset total price
             } else {
-                alert('Failed to place order');
+                toast.error('Failed to place order', {
+                    position: 'top-right',
+                })
             }
         } catch (error) {
             console.error(error);
-            alert('An error occurred while placing the order. Please try again later.');
+            toast.error('An error occurred while placing the order. Please try again later.', {
+                position: 'top-right',
+            })
         }
     };
 
@@ -220,7 +232,11 @@ function Checkout() {
                                     <label htmlFor="cashOnDelivery">Cash On Delivery</label>
                                 </div>
                                 {!isCashOnDelivery && (
-                                    <button className={styles.payNow}>Pay Now</button>
+                                    <button className={styles.payNow} onClick={() => {
+                                        toast.warning('Only Cash On Delivery Option Available', {
+                                            position: 'top-right',
+                                        })
+                                    }}>Pay Now</button>
                                 )}
                             </div>
 
@@ -257,7 +273,7 @@ function Checkout() {
                             </div>
 
                             <div className={styles.placeOrderButton}>
-                                <button onClick={handlePlaceOrder}>Place Order</button>
+                                <button onClick={handlePlaceOrder} disabled={!isCashOnDelivery} className={!isCashOnDelivery ? styles.disabled : ''}>Place Order</button>
                             </div>
 
                         </div>
