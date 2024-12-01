@@ -11,8 +11,7 @@ const fetchProducts = async function (category, subCategory, page, limit) {
     try {
 
         const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/products/?category=${category}&sub-category=${subCategory}&page=${page}&limit=${limit}`, {
-            next: { revalidate: 3 }, // Revalidate after 1 hour
-            cache: 'force-cache', // Use cached data
+            cache: 'no-store'
         });
 
         if (!res.ok) {

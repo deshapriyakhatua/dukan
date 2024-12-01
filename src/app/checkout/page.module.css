@@ -185,6 +185,28 @@
     background-color: var(--button-background);
     border-radius: 5px;
 }
+
+.emptyCartContainer {
+    max-width: 100rem;
+    margin: 100px auto;
+}
+
+.emptyCartContainer>.imgParent {
+    margin: auto;
+    width: 200px;
+    height: 200px;
+}
+.emptyCartContainer>h3 {
+    text-align: center;
+    font-size: 20px;
+    font-weight: 550;
+}
+.emptyCartContainer>p {
+    margin-top: 20px;
+    text-align: center;
+    font-size: 18px;
+    font-weight: 400;
+}
 @media screen and (max-width: 1200px) {
     .mainContainer {
         padding: 48px 24px;

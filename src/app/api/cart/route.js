@@ -8,7 +8,6 @@ export async function GET(req) {
   try {
     await connectToDatabase();
 
-    const { searchParams } = new URL(req.url);
     const userId = req.headers.get('x-user-id');
 
     if (!userId) {

@@ -559,6 +559,11 @@
     .dropdown__button {
         column-gap: 0.25rem;
         pointer-events: none;
+        border-top-left-radius: 5px;
+        border-top-right-radius: 5px;
+        border: 1px solid rgba(204, 204, 204, 0);
+        border-bottom-width: 0;
+        padding: 0 5px;
         z-index: 100;
     }
 
@@ -606,8 +611,8 @@
     }
 
     .dropdown__item:hover .dropdown__button {
-        border: 1px solid gray;
-        background-color: white;
+        border-color: rgb(230, 230, 230);
+        background-color: rgb(255, 255, 255);
     }
 
     .dropdown__item:hover>.dropdown__container {

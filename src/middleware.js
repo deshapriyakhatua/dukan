@@ -3,10 +3,11 @@ import { decrypt } from '@/lib/session'; // Assuming decrypt is from your sessio
 
 export async function middleware(request) {
     const pathname = request.nextUrl.pathname;
-    const secureRoutes = ['/api/cart', '/api/product/add', '/api/users', '/api/order'];
+    const secureApiRoutes = ['/api/cart', '/api/product/add', '/api/users', '/api/order'];
+    const secureRoutes = ['/checkout', '/profile', '/cart', '/orders'];
 
     switch (true) {
-        case secureRoutes.some(route => pathname.startsWith(route)): {
+        case secureApiRoutes.some(route => pathname.startsWith(route)): {
             // Validate session
             const sessionCookie = request.cookies.get('session')?.value;
 
@@ -45,8 +46,13 @@ export async function middleware(request) {
             break;
         }
 
-        case pathname.startsWith('/api/user'): {
-            // Logic for API routes
+        case secureRoutes.some(route => pathname.startsWith(route)): {
+            const sessionCookie = request.cookies.get('session')?.value;
+
+            if (!sessionCookie) {
+                // redict to home ('/auth/signin')
+                return NextResponse.redirect(new URL('/auth/signin', request.url));
+            }
             break;
         }
 
@@ -64,6 +70,6 @@ export const config = {
     matcher: [
         '/api/:path*', // Applies to all routes under /api/users
         '/auth/:path*',
-
+        '/:path*'
     ],
 };

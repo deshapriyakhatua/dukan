@@ -273,19 +273,19 @@ function Header() {
                         </div>
                         <div className={styles.navbar_profile_child}>
                             <div className={styles.navbar_profile_child_title}>
-                                <a className={styles.show_wishlist_dropdown_button} href="/e-commerce-frontend/wishlist/wishlist.html"></a>
+                                <Link className={styles.show_wishlist_dropdown_button} href="/wishlist" title='Wish list'></Link>
                                 <PiHeartStraightLight className={styles.navbar_profile_icons} />
                             </div>
                         </div>
                         <div className={styles.navbar_profile_child}>
                             <div className={styles.navbar_profile_child_title}>
-                                <a className={styles.show_cart_dropdown_button} href="/cart"></a>
+                                <Link className={styles.show_cart_dropdown_button} href="/cart" title="Cart"></Link>
                                 <PiHandbagLight className={styles.navbar_profile_icons} />
                             </div>
                         </div>
                         <div id={styles.navbar_profile_account} className={styles.navbar_profile_child}>
                             <div id={styles.navbar_account_icon} className={styles.navbar_profile_child_title}>
-                                <div className={styles.show_account_dropdown_button} onClick={() => { toggleAccountDropdown(true); }}></div>
+                                <div className={styles.show_account_dropdown_button} onClick={() => { toggleAccountDropdown(true); }} title='Account'></div>
                                 <CiUser className={styles.navbar_profile_icons} size={24} style={{ fontWeight: 'bolder' }} />
                             </div>
                             <div className={`${styles.navbar_account_dropdown} ${isAccountOpened && styles.visible_dropdown}`}>
