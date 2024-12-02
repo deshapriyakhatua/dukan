@@ -5,6 +5,8 @@ import styles from "./page.module.css";
 import { useAuth } from "@/context/AuthContext";
 import { redirect } from "next/navigation";
 import { toast } from "sonner";
+import { useSession } from "next-auth/react";
+import { googleSignIn } from "@/lib/authHelper";
 
 const SignupPage = () => {
   const [formData, setFormData] = useState({
@@ -13,7 +15,8 @@ const SignupPage = () => {
   });
   const [statusMessage, setStatusMessage] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const { isLoggedIn } = useAuth();
+  const { data: session } = useSession();
+  const isLoggedIn = session?.user;
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -78,7 +81,7 @@ const SignupPage = () => {
     }
   };
 
-  if(isLoggedIn) redirect('/');
+  if (isLoggedIn) redirect('/');
 
   return (
     <div className={styles.signin_container}>
@@ -119,16 +122,18 @@ const SignupPage = () => {
                 {isLoading ? "Signing Up..." : "Sign Up"}
               </button>
             </div>
-            
+
             {statusMessage && (
               <p id={styles.status_text}>{statusMessage}</p>
             )}
-            <div className={styles.field}>
-              <a className={styles.ssolink} href="#">
-                Sign-Up with Google
-              </a>
-            </div>
           </form>
+
+          <div className={styles.field}>
+            <button className={styles.ssolink} onClick={googleSignIn}>
+              Sign-Up with Google
+            </button>
+          </div>
+
         </div>
 
         <div className={styles.footer_link}>

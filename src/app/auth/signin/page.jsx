@@ -3,9 +3,9 @@
 import React, { useState } from "react";
 import styles from "./page.module.css";
 import { redirect, useRouter } from "next/navigation";
-import { useAuth } from "@/context/AuthContext";
 import { toast } from "sonner";
-
+import { signIn, useSession } from "next-auth/react";
+import { credentialsSignIn, googleSignIn } from "@/lib/authHelper";
 
 const SigninPage = () => {
 
@@ -16,7 +16,8 @@ const SigninPage = () => {
   const [statusMessage, setStatusMessage] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
-  const { isLoggedIn, setIsLoggedIn } = useAuth();
+  const { data: session } = useSession();
+  const isLoggedIn = session?.user;
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -69,7 +70,7 @@ const SigninPage = () => {
 
       if (response.ok) {
         setStatusMessage("Login successful!");
-        setIsLoggedIn(true);
+        // setIsLoggedIn(true);
         toast.success('Login successful!');
       } else {
         setStatusMessage(result.error || "Invalid credentials.");
@@ -84,6 +85,9 @@ const SigninPage = () => {
     }
   };
 
+  const credentialsAction = (formData) => {
+    signIn("credentials", formData)
+  }
   if (isLoggedIn) redirect('/');
 
   return (
@@ -93,7 +97,7 @@ const SigninPage = () => {
           <h1 className={styles.signin_title}>Sign In</h1>
           <p className={styles.formbg_title}>Sign in to your account</p>
 
-          <form id={styles.form_login} onSubmit={handleSubmit}>
+          <form id={styles.form_login} onSubmit={credentialsAction}>
             <div className={styles.field}>
               <label htmlFor="phone">Phone</label>
               <input
@@ -133,12 +137,14 @@ const SigninPage = () => {
             {statusMessage && (
               <p id={styles.status_text}>{statusMessage}</p>
             )}
-            <div className={styles.field}>
-              <a className={styles.ssolink} href="#">
-                Sign-in with Google
-              </a>
-            </div>
           </form>
+
+          <div className={styles.field}>
+            <button className={styles.ssolink} onClick={googleSignIn}>
+              Sign-In with Google
+            </button>
+          </div>
+
         </div>
 
         <div className={styles.footer_link}>

@@ -1,7 +1,9 @@
 import { NextResponse } from 'next/server';
 import { decrypt } from '@/lib/session'; // Assuming decrypt is from your session management module
+import { auth } from './auth';
 
-export async function middleware(request) {
+export default async function middleware(request) {
+    // console.log("session middleware: ", session)
     const pathname = request.nextUrl.pathname;
     const secureApiRoutes = ['/api/cart', '/api/product/add', '/api/users', '/api/order'];
     const secureRoutes = ['/checkout', '/profile', '/cart', '/orders'];
@@ -38,8 +40,9 @@ export async function middleware(request) {
 
         case pathname.startsWith('/auth'): {
             const sessionCookie = request.cookies.get('session')?.value;
+            const session = await auth();
 
-            if (sessionCookie) {
+            if (session?.user) {
                 // redict to home ('/')
                 return NextResponse.redirect(new URL('/', request.url));
             }
@@ -48,8 +51,9 @@ export async function middleware(request) {
 
         case secureRoutes.some(route => pathname.startsWith(route)): {
             const sessionCookie = request.cookies.get('session')?.value;
+            const session = await auth();
 
-            if (!sessionCookie) {
+            if (!session?.user) {
                 // redict to home ('/auth/signin')
                 return NextResponse.redirect(new URL('/auth/signin', request.url));
             }
@@ -68,8 +72,6 @@ export async function middleware(request) {
 // Apply middleware only to specific routes
 export const config = {
     matcher: [
-        '/api/:path*', // Applies to all routes under /api/users
-        '/auth/:path*',
-        '/:path*'
+        '/((?!api|_next/static|_next/image|favicon.ico).*)'
     ],
 };

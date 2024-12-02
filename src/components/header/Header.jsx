@@ -6,8 +6,8 @@ import { AiOutlineClose } from "react-icons/ai";
 import { CiSearch, CiUser, CiMenuFries } from "react-icons/ci";
 import { FaShopware } from 'react-icons/fa'
 import { PiHeartStraightLight, PiHandbagLight, PiUserCircleLight, PiUserLight } from 'react-icons/pi'
-import { useAuth } from '@/context/AuthContext';
 import Link from 'next/link';
+import { useSession } from 'next-auth/react';
 
 function Header() {
 
@@ -156,7 +156,8 @@ function Header() {
     const [isAccountOpened, setIsAccountOpened] = useState(false);
     const [activeDropdown, setActiveDropdown] = useState(null);
     const [screenWidth, setScreenWidth] = useState(null); // Start with null
-    const { isLoggedIn, setIsLoggedIn } = useAuth();
+    const { data: session } = useSession();
+    const isLoggedIn = session?.user;
 
     const toggleMenuButton = () => {
         setMenuOpened(!menuOpened);

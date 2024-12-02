@@ -5,6 +5,7 @@ import Footer from "@/components/footer/Footer";
 import { AuthProvider } from "@/context/AuthContext";
 import { Suspense } from "react";
 import { Toaster } from 'sonner';
+import { SessionProvider } from "next-auth/react"
 
 const montserrat = Montserrat({
   subsets: ["cyrillic", "cyrillic-ext", "latin", "latin-ext", "vietnamese"],
@@ -20,6 +21,7 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
+      <SessionProvider>
       <AuthProvider>
         <body className={` ${montserrat.variable}`}>
           <Suspense fallback={null}>
@@ -34,6 +36,7 @@ export default function RootLayout({ children }) {
           </Suspense>
         </body>
       </AuthProvider>
+      </SessionProvider>
     </html>
   );
 }

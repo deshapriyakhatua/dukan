@@ -7,19 +7,19 @@ import { AiOutlineUser } from 'react-icons/ai'
 import { SlLocationPin } from "react-icons/sl";
 import { FaCreditCard, FaUserCog } from 'react-icons/fa';
 import { MdContactSupport } from 'react-icons/md';
-import { useAuth } from '@/context/AuthContext';
 import { redirect, useRouter } from 'next/navigation';
+import { useSession } from 'next-auth/react';
+import { handleSignOut } from '@/lib/authHelper';
 
 function page() {
     const accountOptions = [
         {}
     ];
-    const {isLoggedIn, logout} = useAuth();
+    const { data: session } = useSession();
+    const isLoggedIn = session?.user;
     const router = useRouter();
 
-    console.log(isLoggedIn)
-
-    if(isLoggedIn != null && !isLoggedIn) { redirect("/auth/signin")}
+    if(!isLoggedIn) { redirect("/auth/signin")}
 
     return (
         <div className={styles.mainPage}>
@@ -75,7 +75,7 @@ function page() {
                 <div className={styles.lastSection}>
                     <button className={styles.logoutButton} 
                      onClick={() => {
-                         logout();
+                         handleSignOut()
                       }}>Log out</button>
                 </div>
 
