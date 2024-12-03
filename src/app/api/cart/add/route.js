@@ -2,17 +2,27 @@ import { NextResponse } from 'next/server';
 import mongoose from 'mongoose';
 import connectToDatabase from '@/lib/mongoose';
 import Cart from '@/models/Cart';
+import User from '@/models/User';
 
 export async function POST(req) {
   try {
     const userId = req.headers.get('x-user-id');
     const { productId, quantity } = await req.json();
-
+console.log(userId, productId, quantity)
     await connectToDatabase();
 
     if (!userId || !productId || !quantity) {
       return NextResponse.json(
         { error: 'Missing required fields: userId, productId, or quantity' },
+        { status: 400 }
+      );
+    }
+
+    const user = await User.findById(userId);
+
+    if(!user) {
+      return NextResponse.json(
+        { error: 'Sign In to add product' },
         { status: 400 }
       );
     }

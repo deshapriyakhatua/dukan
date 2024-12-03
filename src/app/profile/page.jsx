@@ -19,7 +19,7 @@ function page() {
     const isLoggedIn = session?.user;
     const router = useRouter();
 
-    if(!isLoggedIn) { redirect("/auth/signin")}
+    if(!isLoggedIn) { redirect("/auth/signin"); }
 
     return (
         <div className={styles.mainPage}>
@@ -74,8 +74,10 @@ function page() {
 
                 <div className={styles.lastSection}>
                     <button className={styles.logoutButton} 
-                     onClick={() => {
-                         handleSignOut()
+                     onClick={async () => {
+                         const signedOut = await handleSignOut();
+                         if(signedOut) router.push('/auth/signin');
+                         console.log(signedOut)
                       }}>Log out</button>
                 </div>
 

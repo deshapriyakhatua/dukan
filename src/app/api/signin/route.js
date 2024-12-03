@@ -1,7 +1,6 @@
 import connectToDatabase from "@/lib/mongoose";
 import User from "@/models/User";
 import bcrypt from "bcrypt";
-import { createSession } from "@/lib/session";
 
 export async function POST(req) {
   try {
@@ -87,12 +86,10 @@ export async function POST(req) {
       );
     }
 
-    // Generate a session
-    await createSession(user._id); // Pass the user's unique identifier to create a session
 
     // Send success response
     return new Response(
-      JSON.stringify({ message: "Login successful" }),
+      JSON.stringify({ message: "Login successful", user }),
       {
         status: 200,
         headers: { "Content-Type": "application/json" },

@@ -6,6 +6,8 @@ import { redirect, useRouter } from "next/navigation";
 import { toast } from "sonner";
 import { signIn, useSession } from "next-auth/react";
 import { credentialsSignIn, googleSignIn } from "@/lib/authHelper";
+import { CredentialsSignin } from "next-auth";
+
 
 const SigninPage = () => {
 
@@ -27,67 +29,6 @@ const SigninPage = () => {
     }));
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setStatusMessage("");
-    setIsLoading(true);
-
-    try {
-      const { phone, password } = formData;
-
-      // Client-side validation
-      if (!phone || !password) {
-        setStatusMessage("Phone and Password are required.");
-        toast.warning("Phone and Password are required.");
-        setIsLoading(false);
-        return;
-      }
-
-      if (phone.length !== 10 || !/^\d+$/.test(phone)) {
-        setStatusMessage("Phone number must be 10 digits.");
-        toast.warning("Phone number must be 10 digits.");
-        setIsLoading(false);
-        return;
-      }
-
-      if (password.length < 6) {
-        setStatusMessage("Password must be at least 6 characters.");
-        toast.warning("Password must be at least 6 characters.");
-        setIsLoading(false);
-        return;
-      }
-
-      // Send data to the backend
-      const response = await fetch("/api/auth/signin", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formData),
-      });
-
-      const result = await response.json();
-
-      if (response.ok) {
-        setStatusMessage("Login successful!");
-        // setIsLoggedIn(true);
-        toast.success('Login successful!');
-      } else {
-        setStatusMessage(result.error || "Invalid credentials.");
-        toast.error('Invalid credentials.!');
-      }
-    } catch (error) {
-      console.error("Sign-in error:", error);
-      setStatusMessage("An unexpected error occurred.");
-      toast.error('An unexpected error occurred.!');
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  const credentialsAction = (formData) => {
-    signIn("credentials", formData)
-  }
   if (isLoggedIn) redirect('/');
 
   return (
@@ -97,7 +38,42 @@ const SigninPage = () => {
           <h1 className={styles.signin_title}>Sign In</h1>
           <p className={styles.formbg_title}>Sign in to your account</p>
 
-          <form id={styles.form_login} onSubmit={credentialsAction}>
+          <form id={styles.form_login} onSubmit={async (e) => {
+            e.preventDefault(); // Prevent default form submission behavior
+
+            try {
+
+
+              const formData = new FormData(e.target); // Access form data
+              const phone = formData.get("phone");
+              const password = formData.get("password");
+
+            // Client-side validation
+              if (!phone || !password) {
+                throw new Error("Phone and Password are required.");
+              }
+
+              if (phone.length !== 10 || !/^\d+$/.test(phone)) {
+                throw new Error("Phone number must be 10 digits.");
+              }
+
+              if (password.length < 6) {
+                throw new Error("Password must be at least 6 characters.");
+              }
+
+              const signedIn = await credentialsSignIn({
+                phone,
+                password,
+                redirect: false,
+              });
+              toast.success('Signed in successfully')
+              console.log('signedIn: ');
+              router.push('/')
+            } catch (error) {
+              console.dir(error?.message?.split('#*')[0])
+              toast.error(error?.message?.split('#*')[0])
+            }
+          }}>
             <div className={styles.field}>
               <label htmlFor="phone">Phone</label>
               <input
@@ -140,7 +116,11 @@ const SigninPage = () => {
           </form>
 
           <div className={styles.field}>
-            <button className={styles.ssolink} onClick={googleSignIn}>
+            <button className={styles.ssolink} onClick={async () => {
+              const signedIn = await googleSignIn('google')
+              // if (signedIn) redirect('/')
+              console.log('signedIn: ', signedIn)
+            }}>
               Sign-In with Google
             </button>
           </div>

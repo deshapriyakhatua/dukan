@@ -100,14 +100,15 @@ function ProductContent({ product }) {
             </div>
 
             <div className={`${styles.purchase_info} ${styles.product_content_child}`}>
-                <button type="button" className={styles.add_to_cart_btn} onClick={() => { handleAddToCart('add_to_cart'); }}>
-                    {!addToCartLoading ? 'Add to Cart' : 'Adding to cart...'} <PiHandbagLight size={20} className={styles.add_to_cart_icon} />
+                <button type="button" className={styles.add_to_cart_btn} onClick={() => { handleAddToCart('add_to_cart'); }} disabled={addToCartLoading}>
+                    {!addToCartLoading ? 'Add to Cart' : 'Adding...'} <PiHandbagLight size={20} className={styles.add_to_cart_icon} />
                 </button>
                 <button type="button" className={styles.buy_now_btn}
                     onClick={() => {
                         handleAddToCart('buy_now');
-                    }} >
-                    {!buyNowLoading ? 'Buy Now' : 'Adding to cart...'}<FaOpencart size={20} className={styles.add_to_cart_icon} />
+                    }} 
+                    disabled={buyNowLoading}>
+                    {!buyNowLoading ? 'Buy Now' : 'Adding...'}<FaOpencart size={20} className={styles.add_to_cart_icon} />
                 </button>
             </div>
 
