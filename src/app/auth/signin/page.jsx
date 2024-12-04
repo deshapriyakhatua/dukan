@@ -133,7 +133,7 @@ const SigninPage = () => {
               await handleOAuthSignIn('google');
             }}
             disabled={isGoogleSignInButtonLoading}>
-              {isGoogleSignInButtonLoading ? 'Loading...' :'Sign In with Google'}  <FcGoogle />
+              {isGoogleSignInButtonLoading ? 'Loading...' :'Sign In with Google'}  <FcGoogle size={18}/>
             </button>
           </div>
 

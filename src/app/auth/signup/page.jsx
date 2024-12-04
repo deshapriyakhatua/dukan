@@ -145,7 +145,7 @@ const SignupPage = () => {
               await handleOAuthSignIn('google');
             }}
             disabled={isGoogleSignInButtonLoading}>
-              {isGoogleSignInButtonLoading ? 'Loading...' :'Sign Up with Google'}  <FcGoogle />
+              {isGoogleSignInButtonLoading ? 'Loading...' :'Sign Up with Google'}  <FcGoogle size={18}/>
             </button>
           </div>
 

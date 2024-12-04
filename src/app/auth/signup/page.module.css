@@ -105,15 +105,18 @@
   }
   .oAuthButton {
     align-self: center;
-    width: 220px;
     padding: 10px 20px;
     border-radius: 5px;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 10px;
+    gap: 15px;
     text-align: center;
+    font-size: 14px;
     font-weight: 450;
+    background-color: white;
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+    border: 1px solid rgb(234, 234, 234);
   }
   
   .footer_link span {
@@ -128,9 +131,7 @@
   }
   
   @media screen and (max-width: 500px) {
-    .field input {
-      width: 300px;
-    }
+    
     .formbg {
       padding: 2.5rem 1rem;
       box-shadow: none;

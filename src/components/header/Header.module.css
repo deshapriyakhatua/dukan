@@ -457,6 +457,7 @@
     color: var(--nav-title-dropdown-color);
     font-size: var(--navbar-title-dropdown);
     display: inline-block;
+    cursor: pointer;
 }
 
 
