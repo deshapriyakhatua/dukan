@@ -55,6 +55,7 @@ function Order() {
 
     if (status === 'loading') return <Loading />;
     if (status === 'unauthenticated') {
+        toast.warning('Sign in first')
         redirect("/auth/signin");
     }
 

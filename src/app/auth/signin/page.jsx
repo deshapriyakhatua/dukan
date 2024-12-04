@@ -57,7 +57,6 @@ const SigninPage = () => {
         redirect: false,
       });
       toast.success('Signed in successfully')
-      console.log('signedIn: ');
       await update();
     } catch (error) {
       console.dir(error?.message?.split('#*')[0])
