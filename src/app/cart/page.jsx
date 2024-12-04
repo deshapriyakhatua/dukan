@@ -5,9 +5,10 @@ import styles from './page.module.css';
 import { RiDeleteBin5Line } from 'react-icons/ri';
 import { PiHeartStraightLight } from 'react-icons/pi';
 import { AiOutlineDelete } from 'react-icons/ai';
-import { useRouter } from 'next/navigation';
+import { redirect, useRouter } from 'next/navigation';
 import { toast } from 'sonner';
 import Loading from '../loading';
+import { useSession } from 'next-auth/react';
 
 const fetchCart = async function () {
     try {
@@ -77,6 +78,7 @@ function Cart() {
     const [cartItems, setCartItems] = useState(null);
     const [totalPrice, setTotalPrice] = useState(0);
     const [shippingChrg, setShippingChrg] = useState(0);
+    const { data: session, status, update } = useSession();
 
     useEffect(() => {
         async function fetchData() {
@@ -86,8 +88,8 @@ function Cart() {
             calculateTotalPrice(data?.items || []);
         }
 
-        fetchData();
-    }, []);
+        if(status === 'authenticated') fetchData();
+    }, [status]);
 
     const calculateTotalPrice = (items) => {
         const total = items.reduce((acc, item) => acc + item.product.price * item.quantity, 0);
@@ -128,6 +130,10 @@ function Cart() {
         }
     }
 
+    
+    if (status === 'loading') return <Loading />;
+    if (status === 'unauthenticated') redirect("/auth/signin");
+    
     if (!cartItems) return <Loading />;
 
     return (

@@ -10,6 +10,7 @@ import { MdContactSupport } from 'react-icons/md';
 import { redirect, useRouter } from 'next/navigation';
 import { signOut, useSession } from 'next-auth/react';
 import { toast } from 'sonner';
+import Loading from '../loading';
 
 function page() {
     
@@ -29,7 +30,7 @@ function page() {
         }
       }
 
-    if(status === 'loading')  return null; 
+    if(status === 'loading')  return <Loading />; 
     if(status === 'unauthenticated') redirect("/auth/signin"); 
 
     return (

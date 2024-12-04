@@ -3,7 +3,9 @@
 import React, { useEffect, useState } from 'react'
 import styles from './page.module.css'
 import { toast } from 'sonner';
-import { useRouter } from 'next/navigation';
+import { redirect, useRouter } from 'next/navigation';
+import { useSession } from 'next-auth/react';
+import Loading from '../loading';
 
 const fetchCart = async function () {
     try {
@@ -73,6 +75,7 @@ function Checkout() {
     const [landmark, setLandmark] = useState(null);
     const [alternatePhone, setAlternatePhone] = useState(null);
     const router = useRouter();
+    const { data: session, status, update } = useSession();
 
     useEffect(() => {
         async function fetchData() {
@@ -87,8 +90,8 @@ function Checkout() {
             }
         }
 
-        fetchData();
-    }, [])
+        if(status === 'authenticated') fetchData();
+    }, [status])
 
     const handlePlaceOrder = async () => {
         if (!fullName || !phone || !pincode || !locality || !address || !district || !state) {
@@ -136,6 +139,11 @@ function Checkout() {
             })
         }
     };
+
+    if (status === 'loading') return <Loading />;
+    if (status === 'unauthenticated') redirect("/auth/signin");
+
+    if (!cartItems) return <Loading />;
 
     return (
         <section className={styles.mainContainer}>

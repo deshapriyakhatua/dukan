@@ -4,7 +4,10 @@ import React, { useEffect, useState } from 'react'
 import styles from './page.module.css'
 import { GiExpand } from "react-icons/gi";
 import { GrDeliver } from "react-icons/gr";
-import { useRouter } from 'next/navigation';
+import { redirect, useRouter } from 'next/navigation';
+import { useSession } from 'next-auth/react';
+import { toast } from 'sonner';
+import Loading from '../loading';
 
 const fetchOrder = async function () {
     try {
@@ -22,44 +25,64 @@ const fetchOrder = async function () {
         return res.json();
     } catch (error) {
         console.error(`Error fetching products:`, error.message);
-        throw new Error('An error occurred while fetching the product. Please try again later.');
+        throw new Error(error.message);
     }
 }
 
 function Order() {
 
-    const router = useRouter();
+    
     const [OrderItems, setOrderItems] = useState(null);
+    const { data: session, status, update } = useSession();
 
     useEffect(() => {
 
         async function fetchData() {
-            const data = await fetchOrder();
-            console.log(data);
-            setOrderItems(data || []);
+            try {
+                const data = await fetchOrder();
+                console.log(data);
+                setOrderItems(data);
+
+            } catch (error) {
+                setOrderItems([]);
+                toast.error(error.message)
+            }
         }
 
-        fetchData();
+        if (status === 'authenticated') fetchData();
 
-    }, [])
+    }, [status])
+
+    if (status === 'loading') return <Loading />;
+    if (status === 'unauthenticated') {
+        redirect("/auth/signin");
+    }
+
+    if(!OrderItems) return <Loading />
 
     return (
         <section className={styles.main_cart_section}>
             <div className={styles.main_cart_parent}>
                 <div className={styles.card_holder}>
+
                     {OrderItems && (
                         <h4 className={styles.card_holder_title}>
                             Orders: <span>{OrderItems?.length}</span>
                         </h4>
                     )}
 
+                    {OrderItems && OrderItems.length === 0 && (
+                        <p>No order available</p>
+                    )}
+
                     {OrderItems && OrderItems?.map((order, indx) => (
                         <div className={styles.card_parent} key={indx}>
-                            <div>
-                                <p>Time: {new Date(order?.createdAt).toLocaleString()}</p>
-                                <p>Number of Products: {order?.subOrders?.length}</p>
-                                <p>Total Order Value: {order?.totalPrice}Rs</p>
-                                <p>Payment Method: {order.paymentMethod === 'cash_on_delivery' ? 'Cash On Delivery' : 'Online'}</p>
+                            <div className={styles.orderDetails}>
+                                <p>Order Id: <span>{order?._id}</span></p>
+                                <p>Time: <span>{new Date(order?.createdAt).toLocaleString()}</span></p>
+                                <p>Number of Products: <span>{order?.subOrders?.length}</span></p>
+                                <p>Total Order Value: <span>{order?.totalPrice}Rs</span></p>
+                                <p>Payment Method: <span>{order.paymentMethod === 'cash_on_delivery' ? 'Cash On Delivery' : 'Online'}</span></p>
                             </div>
                             {order.subOrders && order.subOrders?.map((product, indx) => (
                                 <div className={styles.card} key={indx}>
@@ -73,19 +96,19 @@ function Order() {
                                             <h2 className={styles.card_title}>{product?.product?.name}</h2>
                                         </div>
                                         <div className={styles.card_details_child}>
-                                            <p>Status: Ready to Ship</p>
+                                            <p>Status: <span>Ready to Ship</span></p>
                                         </div>
                                         <div className={styles.card_details_child}>
-                                            <p><span>Quantity : </span><span>{product.quantity}</span></p>
+                                            <p>Quantity : <span>{product.quantity}</span></p>
                                         </div>
                                         <div className={styles.card_details_child}>
                                             <div className={styles.edit_button_parent}>
                                                 <button className={styles.remove_button}>
-                                                <GiExpand />
+                                                    <GiExpand />
                                                     <span className={styles.move_to_wishlist_button_text}> Details</span>
                                                 </button>
                                                 <button className={styles.move_to_wishlist_button}>
-                                                <GrDeliver />
+                                                    <GrDeliver />
                                                     <span className={styles.move_to_wishlist_button_text}> Track</span>
                                                 </button>
                                             </div>
@@ -98,8 +121,7 @@ function Order() {
                             ))
                             }
                         </div>
-                    ))
-                    }
+                    ))}
 
                 </div>
             </div>

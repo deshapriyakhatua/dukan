@@ -3,19 +3,19 @@
     padding: 48px;
 }
 
-.main_cart_section .main_cart_parent {
+.main_cart_parent {
     max-width: 100rem;
     margin: auto;
 }
 
-.main_cart_section .card_holder {
+.card_holder {
     width: 100%;
     display: flex;
     flex-direction: column;
     gap: 25px;
 }
 
-.main_cart_section .card_holder_title {
+.card_holder_title {
     padding: 1rem 0;
 }
 
@@ -23,7 +23,7 @@
     font-size: 15px;
 }
 
-.main_cart_section .card_parent {
+.card_parent {
     padding: 30px 10px;
     width: 100%;
     display: flex;
@@ -31,8 +31,18 @@
     border: 1px solid #cacaca;
     gap: 15px;
 }
-
-.main_cart_section .card {
+.orderDetails {
+    
+}
+.orderDetails>p {
+    font-size: 14px;
+    font-weight: 500;
+}
+.orderDetails span {
+    font-size: 15px;
+    font-weight: 400;
+}
+.card {
     width: 100%;
     padding: 1rem 1rem;
     display: flex;
@@ -40,18 +50,18 @@
     box-shadow: rgba(17, 17, 26, 0.1) 0px 1px 0px;
 }
 
-.main_cart_section .card_image_container {
-    width: 150px;
+.card_image_container {
+    width: 100px;
 }
 
-.main_cart_section .card_image {
+.card_image {
     width: 100%;
     aspect-ratio: 2/3;
     object-fit: cover;
     border-radius: 0.5rem;
 }
 
-.main_cart_section .card_details {
+.card_details {
     width: 100%;
     display: flex;
     flex-direction: column;
@@ -59,7 +69,7 @@
     align-items: center;
 }
 
-.main_cart_section .card_details_child {
+.card_details_child {
     width: 100%;
     padding: 0.5rem 0;
     display: flex;
@@ -68,24 +78,33 @@
     align-items: center;
 }
 
-.main_cart_section .card_details_child .card_title {
+.card_title {
     font-size: 1rem;
     font-weight: 600;
 }
 
-.main_cart_section .card_details_child .pack_note {
+.pack_note {
     font-size: 0.7rem;
     font-weight: 500;
 }
 
-.main_cart_section .edit_button_parent {
+.card_details_child p {
+    font-weight: 500;
+    font-size: 12px;
+}
+.card_details_child span {
+    font-size: 13px;
+    font-weight: 400;
+}
+
+.edit_button_parent {
     display: flex;
     justify-content: center;
     align-items: center;
     gap: 2rem;
 }
 
-.main_cart_section .edit_button_parent button {
+.edit_button_parent button {
     padding: 0.4rem 0.7rem;
     display: flex;
     justify-content: center;
@@ -97,17 +116,17 @@
     transition: all 0.2s ease-in-out;
 }
 
-.main_cart_section .edit_button_parent button:active {
+.edit_button_parent button:active {
     background-color: rgb(231, 231, 231);
     border: 1px solid rgb(180, 180, 180);
 }
 
-.main_cart_section .edit_button_parent button span {
+.edit_button_parent button span {
     font-size: 0.9rem;
     font-weight: 500;
 }
 
-.main_cart_section .card_details_child .price_parent h3 {
+.price_parent h3 {
     font-weight: 400;
 }
 
@@ -118,44 +137,47 @@
 }
 
 @media screen and (max-width: 780px) {
-    .main_cart_section .card_holder_title {
-        padding: 0 1rem;
+    .card_holder_title {
         font-size: 0.9rem;
         font-weight: 500;
     }
 
-    .main_cart_section .card {
+    .card {
         padding: 1rem;
     }
 
-    .main_cart_section .card_details_child {
+    .card_details_child {
         padding: 0.2rem 1rem;
     }
 
-    .main_cart_section .card_details_child .card_title {
+    .card_title {
         font-weight: 500;
         font-size: 90%;
     }
 
-    .main_cart_section .card_details_child .pack_note {
+    .pack_note {
         font-size: 0.7rem;
     }
 
-    .main_cart_section .card_details_child p {
+    .card_details_child p {
+        font-weight: 500;
+        font-size: 12px;
+    }
+    .card_details_child span {
+        font-size: 13px;
         font-weight: 300;
-        font-size: 80%;
     }
 
-    .main_cart_section .edit_button_parent {
+    .edit_button_parent {
         gap: 1rem;
     }
 
-    .main_cart_section .edit_button_parent button {
+    .edit_button_parent button {
         padding: 0.3rem;
         border-radius: 50%;
     }
 
-    .main_cart_section .card_details_child .edit_button_parent .move_to_wishlist_button_text {
+    .edit_button_parent .move_to_wishlist_button_text {
         display: none;
     }
 }

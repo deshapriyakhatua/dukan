@@ -90,9 +90,11 @@
   }
   
   #status_text {
+    width: 360px;
     margin-bottom: 10px;
     text-align: center;
-    font-size: 18px;
+    font-size: 13px;
+    text-wrap: wrap;
     font-weight: 400;
     color: red;
   }

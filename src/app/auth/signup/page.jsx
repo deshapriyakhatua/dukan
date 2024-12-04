@@ -7,6 +7,7 @@ import { toast } from "sonner";
 import { useSession } from "next-auth/react";
 import {  OAuthSignIn } from "@/lib/authHelper";
 import { FcGoogle } from "react-icons/fc";
+import Loading from "@/app/loading";
 
 const SignupPage = () => {
 
@@ -42,8 +43,8 @@ const SignupPage = () => {
         return;
       }
       if (phone.length < 10) {
-        setStatusMessage("Phone number must be 10 digits.");
-        toast.warning("Phone number must be 10 digits.");
+        setStatusMessage("Phone number must contain 10 digits.");
+        toast.warning("Phone number must contain 10 digits.");
         setIsSignInButtonLoading(false);
         return;
       }
@@ -89,7 +90,7 @@ const SignupPage = () => {
     await update();
   }
 
-  if (status === 'loading') return null;
+  if (status === 'loading') return <Loading />;
   if (status === 'authenticated') redirect("/");
 
   return (

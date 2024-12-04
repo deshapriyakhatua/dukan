@@ -7,6 +7,7 @@ import { toast } from "sonner";
 import { signIn, useSession } from "next-auth/react";
 import { credentialsSignIn, OAuthSignIn } from "@/lib/authHelper";
 import { FcGoogle } from "react-icons/fc";
+import Loading from "@/app/loading";
 
 
 const SigninPage = () => {
@@ -73,7 +74,7 @@ const SigninPage = () => {
     await update();
   }
 
-  if (status === 'loading') return null;
+  if (status === 'loading') return <Loading />;
   if (status === 'authenticated') redirect("/");
 
   return (
