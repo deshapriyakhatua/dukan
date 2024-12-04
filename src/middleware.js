@@ -43,7 +43,7 @@ export const middleware = auth((request) =>  {
             if (!session?.user) {
                 console.log(`redict to auth ('/auth/signin')`)
                 // redict to auth ('/auth/signin')
-                return NextResponse.redirect(new URL('/auth/signin', request.url));
+                // return NextResponse.redirect(new URL('/auth/signin', request.url));
             }
             break;
         }

@@ -3,8 +3,8 @@
 import { signIn, signOut } from "@/auth";
 
 
-export async function googleSignIn() {
-  return await signIn("google");
+export async function OAuthSignIn(provider) {
+  return await signIn(provider);
 }
 
 export async function credentialsSignIn(formData) {
@@ -85,8 +85,3 @@ export async function credentialsSignInHelper(credentials) {
 
 }
 
-
-
-export async function handleSignOut() {
-  return await signOut();
-}

@@ -156,8 +156,9 @@ function Header() {
     const [isAccountOpened, setIsAccountOpened] = useState(false);
     const [activeDropdown, setActiveDropdown] = useState(null);
     const [screenWidth, setScreenWidth] = useState(null); // Start with null
-    const { data: session } = useSession();
-    const isLoggedIn = session?.user;
+    const { data: session, status } = useSession();
+    const isLoggedIn = status === 'authenticated';
+    const isAuthLoading = status === 'loading';
 
     const toggleMenuButton = () => {
         setMenuOpened(!menuOpened);

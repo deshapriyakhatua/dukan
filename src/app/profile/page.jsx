@@ -1,6 +1,6 @@
 "use client";
 
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import styles from './page.module.css'
 import { BsBoxFill, BsChevronRight } from 'react-icons/bs'
 import { AiOutlineUser } from 'react-icons/ai'
@@ -8,18 +8,29 @@ import { SlLocationPin } from "react-icons/sl";
 import { FaCreditCard, FaUserCog } from 'react-icons/fa';
 import { MdContactSupport } from 'react-icons/md';
 import { redirect, useRouter } from 'next/navigation';
-import { useSession } from 'next-auth/react';
-import { handleSignOut } from '@/lib/authHelper';
+import { signOut, useSession } from 'next-auth/react';
+import { toast } from 'sonner';
 
 function page() {
-    const accountOptions = [
-        {}
-    ];
-    const { data: session } = useSession();
-    const isLoggedIn = session?.user;
+    
+    const { data: session, status, update } = useSession();
     const router = useRouter();
+    const [isSignOutLoading, setIsSignOutLoading] = useState(false);
+    const handleSignOut = async () => {
+        try {
+            setIsSignOutLoading(true);
+            await signOut();
+            toast.success('Signed out Successfully')
+            await update();
+            setIsSignOutLoading(false);
+        } catch (error) {
+            console.log(error)
+            toast.error(error.message)
+        }
+      }
 
-    if(!isLoggedIn) { redirect("/auth/signin"); }
+    if(status === 'loading')  return null; 
+    if(status === 'unauthenticated') redirect("/auth/signin"); 
 
     return (
         <div className={styles.mainPage}>
@@ -74,11 +85,9 @@ function page() {
 
                 <div className={styles.lastSection}>
                     <button className={styles.logoutButton} 
-                     onClick={async () => {
-                         const signedOut = await handleSignOut();
-                         if(signedOut) router.push('/auth/signin');
-                         console.log(signedOut)
-                      }}>Log out</button>
+                     onClick={handleSignOut}>
+                        { !isSignOutLoading ?'Sign out' :'Signing out...' }
+                      </button>
                 </div>
 
             </div>

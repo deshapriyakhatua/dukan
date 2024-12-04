@@ -2,7 +2,6 @@ import { Montserrat } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/header/Header";
 import Footer from "@/components/footer/Footer";
-import { AuthProvider } from "@/context/AuthContext";
 import { Suspense } from "react";
 import { Toaster } from 'sonner';
 import { SessionProvider } from "next-auth/react"
@@ -27,7 +26,6 @@ export default async function RootLayout({ children }) {
   return (
     <html lang="en">
       <SessionProvider>
-      <AuthProvider>
         <body className={` ${montserrat.variable}`}>
           <Suspense fallback={null}>
             <Header />
@@ -40,7 +38,6 @@ export default async function RootLayout({ children }) {
               closeButton={true} />
           </Suspense>
         </body>
-      </AuthProvider>
       </SessionProvider>
     </html>
   );

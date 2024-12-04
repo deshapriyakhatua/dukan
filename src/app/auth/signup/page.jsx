@@ -2,21 +2,22 @@
 
 import React, { useState } from "react";
 import styles from "./page.module.css";
-import { useAuth } from "@/context/AuthContext";
 import { redirect } from "next/navigation";
 import { toast } from "sonner";
 import { useSession } from "next-auth/react";
-import { googleSignIn } from "@/lib/authHelper";
+import {  OAuthSignIn } from "@/lib/authHelper";
+import { FcGoogle } from "react-icons/fc";
 
 const SignupPage = () => {
+
   const [formData, setFormData] = useState({
     phone: "",
     password: "",
   });
   const [statusMessage, setStatusMessage] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
-  const { data: session } = useSession();
-  const isLoggedIn = session?.user;
+  const [isSignInButtonLoading, setIsSignInButtonLoading] = useState(false);
+  const [isGoogleSignInButtonLoading, setIsGoogleSignInButtonLoading] = useState(false);
+  const { data: session, status, update } = useSession();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -26,10 +27,10 @@ const SignupPage = () => {
     }));
   };
 
-  const handleSubmit = async (e) => {
+  const handleCredentialSignUp = async (e) => {
     e.preventDefault();
     setStatusMessage("");
-    setIsLoading(true);
+    setIsSignInButtonLoading(true);
 
     try {
       // Client-side validation
@@ -37,19 +38,19 @@ const SignupPage = () => {
       if (!phone || !password) {
         setStatusMessage("Phone and Password are required.");
         toast.warning("Phone and Password are required.");
-        setIsLoading(false);
+        setIsSignInButtonLoading(false);
         return;
       }
       if (phone.length < 10) {
         setStatusMessage("Phone number must be 10 digits.");
         toast.warning("Phone number must be 10 digits.");
-        setIsLoading(false);
+        setIsSignInButtonLoading(false);
         return;
       }
       if (password.length < 6) {
         setStatusMessage("Password must be at least 6 characters.");
         toast.warning("Password must be at least 6 characters.");
-        setIsLoading(false);
+        setIsSignInButtonLoading(false);
         return;
       }
 
@@ -77,11 +78,19 @@ const SignupPage = () => {
       setStatusMessage("An unexpected error occurred.");
       toast.error("An unexpected error occurred.");
     } finally {
-      setIsLoading(false);
+      setIsSignInButtonLoading(false);
     }
   };
 
-  if (isLoggedIn) redirect('/');
+  const handleOAuthSignIn = async (provider) => {
+    setIsGoogleSignInButtonLoading(true);
+    await OAuthSignIn(provider);
+    setIsGoogleSignInButtonLoading(false);
+    await update();
+  }
+
+  if (status === 'loading') return null;
+  if (status === 'authenticated') redirect("/");
 
   return (
     <div className={styles.signin_container}>
@@ -90,7 +99,7 @@ const SignupPage = () => {
           <h1 className={styles.signin_title}>Sign Up</h1>
           <p className={styles.formbg_title}>Sign up to your account</p>
 
-          <form id={styles.form_login} onSubmit={handleSubmit}>
+          <form id={styles.form_login} onSubmit={handleCredentialSignUp}>
             <div className={styles.field}>
               <label htmlFor="phone">Phone</label>
               <input
@@ -117,9 +126,9 @@ const SignupPage = () => {
               <button
                 id={styles.submit_button}
                 type="submit"
-                disabled={isLoading}
+                disabled={isSignInButtonLoading}
               >
-                {isLoading ? "Signing Up..." : "Sign Up"}
+                {isSignInButtonLoading ? "Signing Up..." : "Sign Up"}
               </button>
             </div>
 
@@ -128,9 +137,15 @@ const SignupPage = () => {
             )}
           </form>
 
-          <div className={styles.field}>
-            <button className={styles.ssolink} onClick={googleSignIn}>
-              Sign-Up with Google
+          <span>or</span>
+
+          <div className={styles.oAuthButtonContainer}>
+            <button className={styles.oAuthButton} 
+            onClick={async () => {
+              await handleOAuthSignIn('google');
+            }}
+            disabled={isGoogleSignInButtonLoading}>
+              {isGoogleSignInButtonLoading ? 'Loading...' :'Sign Up with Google'}  <FcGoogle />
             </button>
           </div>
 
