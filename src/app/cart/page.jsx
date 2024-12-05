@@ -9,6 +9,7 @@ import { redirect, useRouter } from 'next/navigation';
 import { toast } from 'sonner';
 import Loading from '../loading';
 import { useSession } from 'next-auth/react';
+import { DEFAULT_SIGN_IN } from '@/lib/route';
 
 const fetchCart = async function () {
     try {
@@ -132,7 +133,7 @@ function Cart() {
 
     
     if (status === 'loading') return <Loading />;
-    if (status === 'unauthenticated') redirect("/auth/signin");
+    if (status === 'unauthenticated') redirect(DEFAULT_SIGN_IN);
     
     if (!cartItems) return <Loading />;
 

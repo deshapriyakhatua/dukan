@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 import { auth } from './auth';
-import { secureApiRoutes, securePages } from "./lib/route";
+import { DEFAULT_SIGN_IN, secureApiRoutes, securePages } from "./lib/route";
 
 export const middleware = auth((request) => {
     const session = request.auth;
@@ -18,8 +18,8 @@ export const middleware = auth((request) => {
         }
     } else if (securePages.some(route => pathname.startsWith(route))) {
         if (!session?.user) {
-            console.log('middleware: Redirecting to sign-in (/auth/signin)');
-            return NextResponse.redirect(new URL('/auth/signin', request.url));
+            console.log('middleware: Redirecting to sign-in (DEFAULT_SIGN_IN)');
+            return NextResponse.redirect(new URL(DEFAULT_SIGN_IN, request.url));
         }
     }
 

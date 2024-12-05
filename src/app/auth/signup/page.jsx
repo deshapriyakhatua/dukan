@@ -8,6 +8,7 @@ import { useSession } from "next-auth/react";
 import {  OAuthSignIn } from "@/lib/authHelper";
 import { FcGoogle } from "react-icons/fc";
 import Loading from "@/app/loading";
+import { DEFAULT_SIGN_IN } from "@/lib/route";
 
 const SignupPage = () => {
 
@@ -154,7 +155,7 @@ const SignupPage = () => {
 
         <div className={styles.footer_link}>
           <span>
-            Already have an account? <a href="/auth/signin">Sign In</a>
+            Already have an account? <a href={DEFAULT_SIGN_IN}>Sign In</a>
           </span>
         </div>
       </div>

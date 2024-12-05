@@ -1,6 +1,6 @@
 'use server';
 
-import { signIn, signOut } from "@/auth";
+import { signIn } from "@/auth";
 
 
 export async function OAuthSignIn(provider) {

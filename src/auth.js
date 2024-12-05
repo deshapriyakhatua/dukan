@@ -2,6 +2,7 @@ import NextAuth, {CredentialsSignin} from "next-auth"
 import Google from "next-auth/providers/google";
 import Credentials from "next-auth/providers/credentials"
 import { credentialsSignInHelper, googleSignUp } from "./lib/authHelper";
+import { DEFAULT_SIGN_IN } from "./lib/route";
 
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
@@ -35,7 +36,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     // debug: true,
 
     pages: {
-        signIn: '/auth/signin',
+        signIn: DEFAULT_SIGN_IN,
     },
 
     callbacks: {
