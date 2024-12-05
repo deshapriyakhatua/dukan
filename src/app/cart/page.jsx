@@ -121,13 +121,9 @@ function Cart() {
             setCartItems(updatedCartItems);
             calculateTotalPrice(updatedCartItems);
             removeProduct(productId);
-            toast.success('Item removed successfully!', {
-                position: 'top-right',
-            })
+            toast.success('Item removed successfully!')
         } catch (error) {
-            toast.error('Error removing item from cart!', {
-                position: 'top-right',
-            })
+            toast.error('Error removing item from cart!')
         }
     }
 

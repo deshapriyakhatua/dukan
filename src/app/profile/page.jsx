@@ -11,6 +11,7 @@ import { redirect, useRouter } from 'next/navigation';
 import { signOut, useSession } from 'next-auth/react';
 import { toast } from 'sonner';
 import Loading from '../loading';
+import Link from 'next/link';
 
 function page() {
     
@@ -58,13 +59,13 @@ function page() {
                             <p>View benifits and payment settings</p>
                         </div>
                     </div>
-                    <div className={styles.card}>
+                    <Link href="/orders" className={styles.card}>
                         <div className={styles.imgContainer}><MdContactSupport size={35} /></div>
                         <div className={styles.content}>
                             <h3>Your Orders</h3>
                             <p>Track, return or buy things agin</p>
                         </div>
-                    </div>
+                    </Link>
                 </div>
                 <div className={styles.secondSection}>
                     <div className={styles.othersCard}>
@@ -75,11 +76,11 @@ function page() {
                                 <p>Edit profile</p>
                                 <BsChevronRight />
                             </div>
-                            <div className={styles.cRow}>
+                            <Link href="/profile/addresses" className={styles.cRow}>
                                 <SlLocationPin />
                                 <p>Saved address</p>
                                 <BsChevronRight />
-                            </div>
+                            </Link>
                         </div>
                     </div>
                 </div>

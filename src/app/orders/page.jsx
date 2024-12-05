@@ -20,12 +20,12 @@ const fetchOrder = async function () {
         if (!res.ok) {
             // Extract and throw server-provided error message if available
             const errorData = await res.json();
-            throw new Error(errorData.message || 'Failed to fetch product');
+            throw new Error(errorData.message || 'Failed to fetch orders');
         }
 
         return res.json();
     } catch (error) {
-        console.error(`Error fetching products:`, error.message);
+        console.error(`Error fetching orders:`, error.message);
         throw new Error(error.message);
     }
 }
