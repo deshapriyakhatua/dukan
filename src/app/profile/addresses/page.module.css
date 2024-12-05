@@ -1,0 +1,148 @@
+.mainPage {
+    width: 100%;
+    padding: 48px;
+}
+
+.mainContainer {
+    max-width: 100rem;
+    margin: auto;
+}
+
+.mainHeader {
+    font-size: 16px;
+}
+
+.addressCardsHolder {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.addressCard {
+    border: 1px solid rgb(223, 223, 223);
+    padding: 15px 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.cardEvents {
+    display: flex;
+    gap: 30px;
+    margin-top: 15px;
+    cursor: pointer;
+}
+
+.cardEvents>div {
+    background-color: rgb(230, 230, 230);
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid rgb(209, 209, 209);
+    padding: 5px 8px;
+    border-radius: 5px;
+}
+
+.cardEvents>div:hover {
+    background-color: rgb(215, 215, 215);
+}
+
+.cardEventsIcon {
+    color: rgb(45, 45, 45);
+    font-size: 15px;
+}
+
+/* edit address*/
+
+.editAddressCard {
+    margin-top: 25px;
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+    border: 1px solid rgb(230, 230, 230);
+    padding: 15px;
+}
+
+.editAddressCard>h2 {
+    font-size: 20px;
+}
+
+.inputsContainer {
+    display: flex;
+    justify-content: flex-start;
+    gap: 10px;
+}
+
+.inputContainer {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.inputContainer>label {
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 10px;
+}
+
+.inputContainer>input,
+.inputContainer>select,
+.inputContainer>textarea {
+    font-size: 15px;
+    padding: 15px 10px 10px;
+    max-width: 450px;
+    border-radius: 5px;
+    border: 1px solid rgb(194, 194, 194);
+    font-weight: 500;
+}
+
+.checkboxContainer {
+    display: flex;
+    gap: 10px;
+}
+
+.checkboxContainer>input {
+    width: 20px;
+}
+
+.checkboxContainer>label {
+    font-weight: 500;
+}
+
+.editAddressCardEventContainer {
+    display: flex;
+    gap: 30px;
+}
+.editAddressCardEventContainer>button {
+    padding: 10px 20px;
+    font-size: 15px;
+    font-weight: 500;
+    background-color: rgb(225, 225, 225);
+    border-radius: 5px;
+}
+.editAddressCardEventContainer>button:hover {
+    background-color: rgb(207, 207, 207);
+}
+
+@media screen and (max-width: 1200px) {
+    .mainPage {
+        padding: 24px;
+    }
+}
+
+@media screen and (max-width: 768px) {
+
+    /* edit address*/
+    .inputsContainer {
+        flex-direction: column;
+        gap: 25px;
+    }
+
+    .inputContainer>input,
+    .inputContainer>select,
+    .inputContainer>textarea {
+        max-width: 100%;
+    }
+}

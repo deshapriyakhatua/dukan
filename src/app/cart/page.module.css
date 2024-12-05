@@ -17,7 +17,7 @@
     border-left: 1px solid rgb(241, 241, 241);
 }
 .main_cart_section .card_holder_title {
-    padding: 1rem;
+    padding: 1rem 0;
     text-decoration-color: rgb(232, 1, 39);
 }
 .card_holder_title>span {
@@ -218,11 +218,6 @@
     }
 }
 @media screen and (max-width: 780px) {
-    .main_cart_section .card_holder_title {
-        padding: 0 1rem;
-        font-size: .9rem;
-        font-weight: 500;
-    }
     .main_cart_section .card {
         padding: 1rem 0;
         gap: .3rem;
