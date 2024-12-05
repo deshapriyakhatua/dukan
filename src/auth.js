@@ -3,6 +3,7 @@ import Google from "next-auth/providers/google";
 import Credentials from "next-auth/providers/credentials"
 import { credentialsSignInHelper, googleSignUp } from "./lib/authHelper";
 
+
 export const { handlers, signIn, signOut, auth } = NextAuth({
     secret: process.env.NEXTAUTH_SECRET,
     providers: [
@@ -59,7 +60,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
             return true;
         },
 
-        async jwt({ token, user, account }) {
+        jwt: async ({ token, user, account }) => {
             // This callback is called whenever a JSON Web Token is created (i.e. at sign in) or updated (i.e whenever a session is accessed in the client).
             // console.log('jwt callback: ', token, user)
             // Persist the custom ID in the token during the sign-in process
@@ -74,7 +75,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
             return token;
         },
 
-        async session({ session, token }) {
+        session: async ({ session, token }) => {
             // This callback is called whenever a session is checked. (i.e. when invoking the /api/session endpoint, using useSession or getSession).
             // console.log('session callback: ', session, token)
             // Add the custom ID to the session object
@@ -85,13 +86,14 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
                 session.user.id = token.id; 
             }
             if(token?.role) session.user.role = token?.role;
-            return session;
+
+            return true;
         },
 
-        authorized: async ({ request, auth }) => {
-            // Invoked when a user needs authorization, using Middleware.
-            const url = request.nextUrl;
-            console.log('authorized callback: ')
-        }
+        // authorized: async ({ request, auth }) => {
+        //     // Invoked when a user needs authorization, using Middleware.
+        //     const pathname = request.nextUrl.pathname;
+        //     console.log('authorized callback: ', pathname);
+        // }
     },
 })

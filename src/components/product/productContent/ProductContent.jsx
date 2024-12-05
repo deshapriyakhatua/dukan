@@ -13,17 +13,15 @@ function ProductContent({ product }) {
     const router = useRouter();
     const [productId, setProductId] = useState(product?._id);
     const [quantity, setQuantity] = useState(1);
-    const [message, setMessage] = useState('');
     const [buyNowLoading, setBuyNowLoading] = useState(false);
     const [addToCartLoading, setAddToCartLoading] = useState(false);
 
     const handleAddToCart = async (buttonType) => {
         if (buttonType === 'add_to_cart') setAddToCartLoading(true);
         if (buttonType === 'buy_now') setBuyNowLoading(true);
-        setMessage(''); // Clear previous messages
 
         if (!productId || quantity < 1) {
-            setMessage('Please fill all fields correctly.');
+            toast.error('Invalid credentials.');
             return;
         }
 
@@ -39,26 +37,20 @@ function ProductContent({ product }) {
             const data = await response.json();
 
             if (response.ok) {
-                setMessage('Product added to cart successfully!');
+                toast.success('Product added to cart successfully!');
                 if (buttonType === 'buy_now') router.push('/cart');
             } else {
-                setMessage(data.error || 'Failed to add product to cart.');
+                toast.error(data.error || 'Failed to add product to cart.');
             }
         } catch (error) {
-            setMessage('An error occurred. Please try again.' + error.message);
+            toast.error('An error occurred. Please try again.' + error.message);
         } finally {
             if (buttonType === 'add_to_cart') setAddToCartLoading(false);
             if (buttonType === 'buy_now') setBuyNowLoading(false);
         }
     };
 
-    useEffect(() => {
-        if (message) {
-            toast.success(message, {
-                position: 'top-right',
-            })
-        }
-    }, [message])
+    
     return (
         <div className={styles.product_content}>
 

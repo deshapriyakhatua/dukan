@@ -54,10 +54,7 @@ function Order() {
     }, [status])
 
     if (status === 'loading') return <Loading />;
-    if (status === 'unauthenticated') {
-        toast.warning('Sign in first')
-        redirect("/auth/signin");
-    }
+    if (status === 'unauthenticated') redirect("/auth/signin");
 
     if(!OrderItems) return <Loading />
 
