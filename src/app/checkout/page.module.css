@@ -44,6 +44,7 @@
 
 .inputsContainer {
     display: flex;
+    flex-wrap: wrap;
     justify-content: flex-start;
     gap: 10px;
 }
@@ -229,8 +230,9 @@
 }
 
 @media screen and (max-width: 768px) {
-    .inputsContainer {
-        flex-direction: column;
-        gap: 25px;
+    .inputContainer>input,
+    .inputContainer>select,
+    .inputContainer>textarea {
+        max-width: 100%;
     }
 }
