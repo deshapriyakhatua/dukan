@@ -2,14 +2,12 @@
 
 import React, { useEffect, useState } from 'react';
 import styles from './page.module.css';
-import { RiDeleteBin5Line } from 'react-icons/ri';
-import { PiHeartStraightLight } from 'react-icons/pi';
 import { AiOutlineDelete } from 'react-icons/ai';
 import { redirect, useRouter } from 'next/navigation';
 import { toast } from 'sonner';
-import Loading from '../loading';
 import { useSession } from 'next-auth/react';
 import { DEFAULT_SIGN_IN } from '@/lib/route';
+import Loading from '@/app/loading';
 
 const fetchCart = async function () {
     try {
@@ -220,7 +218,7 @@ function Cart() {
                                     <p className={styles.p_total}>{totalPrice + shippingChrg} Rs</p>
                                 </div>
                                 <div className={`${styles.checkout_details_row} ${styles.row4}`}>
-                                    <button className={styles.checkout_button} onClick={() => router.push('/checkout')}>
+                                    <button className={styles.checkout_button} onClick={() => router.push('/profile/checkout')}>
                                         Go To Checkout
                                     </button>
                                 </div>

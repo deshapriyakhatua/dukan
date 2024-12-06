@@ -7,8 +7,8 @@ import { GrDeliver } from "react-icons/gr";
 import { redirect, useRouter } from 'next/navigation';
 import { useSession } from 'next-auth/react';
 import { toast } from 'sonner';
-import Loading from '../loading';
 import { DEFAULT_SIGN_IN } from '@/lib/route';
+import Loading from '@/app/loading';
 
 const fetchOrder = async function () {
     try {

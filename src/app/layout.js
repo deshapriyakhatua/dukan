@@ -6,6 +6,7 @@ import { Suspense } from "react";
 import { Toaster } from 'sonner';
 import { SessionProvider } from "next-auth/react"
 import connectToDatabase from "@/lib/mongoose";
+import OnUrlChange from "@/components/extra/OnUrlChange";
 
 const montserrat = Montserrat({
   subsets: ["cyrillic", "cyrillic-ext", "latin", "latin-ext", "vietnamese"],
@@ -35,7 +36,9 @@ export default async function RootLayout({ children }) {
               position="top-right"
               richColors={true}
               expand={true}
-              closeButton={true} />
+              closeButton={true}
+            />
+            <OnUrlChange />
           </Suspense>
         </body>
       </SessionProvider>

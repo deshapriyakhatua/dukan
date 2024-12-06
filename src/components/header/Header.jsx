@@ -311,17 +311,12 @@ function Header() {
                                         </Link>
                                     )}
 
-                                    {isLoggedIn && (<Link href="/orders" className={styles.dropList}>
+                                    {isLoggedIn && (<Link href="/profile/orders" className={styles.dropList}>
                                         Orders
                                     </Link>
                                     )}
 
-                                    {isLoggedIn && (<Link href="#" className={styles.dropList}>
-                                        Coupons
-                                    </Link>
-                                    )}
-
-                                    {isLoggedIn && (<Link href="#" className={styles.dropList}>
+                                    {isLoggedIn && (<Link href="/profile/addresses" className={styles.dropList}>
                                         Saved Address
                                     </Link>
                                     )}

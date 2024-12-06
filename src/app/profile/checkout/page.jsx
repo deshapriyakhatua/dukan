@@ -5,8 +5,8 @@ import styles from './page.module.css'
 import { toast } from 'sonner';
 import { redirect, useRouter } from 'next/navigation';
 import { useSession } from 'next-auth/react';
-import Loading from '../loading';
 import { DEFAULT_SIGN_IN } from '@/lib/route';
+import Loading from '@/app/loading';
 
 const fetchCart = async function () {
     try {

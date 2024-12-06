@@ -38,7 +38,7 @@ function page() {
         <div className={styles.mainPage}>
             <div className={styles.mainContainer}>
                 <div className={styles.firstSection}>
-                    <div className={styles.card} onClick={()=>{ router.push('/orders'); }}>
+                    <div className={styles.card} onClick={()=>{ router.push('/profile/orders'); }}>
                         <div className={styles.imgContainer}><BsBoxFill size={35} /></div>
                         <div className={styles.content}>
                             <h3>Your Orders</h3>
