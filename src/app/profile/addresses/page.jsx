@@ -8,6 +8,7 @@ import { useSession } from 'next-auth/react';
 import { toast } from 'sonner';
 import Loading from '@/app/loading';
 import { redirect } from 'next/navigation';
+import { FaPlus } from 'react-icons/fa';
 
 const getAddresses = async () => {
     try {
@@ -76,14 +77,14 @@ const updateAddress = async function (addressId, updatedData) {
     }
 }
 
-const addNewAddress = async function (addressId, updatedData) {
+const addNewAddress = async function (updatedData) {
     try {
         const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/customer/address`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ addressId, updatedData }),
+            body: JSON.stringify({ updatedData }),
         });
 
         if (!response.ok) {
@@ -200,8 +201,8 @@ function page() {
                 toast.warning('Locality must contain atleast 4 letters');
                 return;
             }
-            if (address.length <= 10) {
-                toast.warning('Address must contain atleast 10 letters');
+            if (address.length <= 3) {
+                toast.warning('Address must contain atleast 4 letters');
                 return;
             }
             if (district.length <= 2) {
@@ -217,13 +218,14 @@ function page() {
             toast.success('Address updated successfullly');
             console.log(updatedData);
             await fetchData();
+            setIsFormVisible(false);
+            setEditingAddressId(null);
 
         } catch (error) {
             console.log(error)
             toast.error('Failed to update address');
         } finally {
             setIsUpdateButtonLoading(false);
-            // setEditingAddressId(null);
         }
 
     }
@@ -255,8 +257,8 @@ function page() {
                 toast.warning('Locality must contain atleast 4 letters');
                 return;
             }
-            if (address.length <= 10) {
-                toast.warning('Address must contain atleast 10 letters');
+            if (address.length <= 3) {
+                toast.warning('Address must contain atleast 3 letters');
                 return;
             }
             if (district.length <= 2) {
@@ -270,7 +272,8 @@ function page() {
 
             await addNewAddress(newAddress);
             toast.success('Address added successfullly');
-            console.log(updatedData);
+            setIsFormVisible(false);
+            setAddNewAddressCardVisible(false);
             await fetchData();
 
         } catch (error) {
@@ -312,6 +315,16 @@ function page() {
         }
     }, [editingAddressId])
 
+    useEffect(() => {
+
+        // Scroll to the top of the page when the location changes
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth',
+        });
+
+    }, [isFormVisible]);
+
     if (status === 'loading') return <Loading />;
     if (status === 'unauthenticated') redirect(DEFAULT_SIGN_IN);
 
@@ -323,34 +336,45 @@ function page() {
                 <h1 className={styles.mainHeader}>Total addresses: {addresses.length}</h1>
 
                 {!isFormVisible && (
-                    <div className={styles.addressCardsHolder}>
-                        {addresses && addresses.map((elem, indx) => (
-                            <div className={styles.addressCard} key={indx}>
-                                <p>{elem?.fullName}</p>
-                                <p>{elem?.phone}</p>
-                                <p>{elem?.alternatePhone}</p>
-                                <p>{elem?.address}, {elem?.locality}, {elem?.district}, {elem?.state} - {elem?.pincode}</p>
-                                <p>{elem?.country}</p>
-                                <div className={styles.cardEvents}>
-                                    <button
-                                        onClick={() => {
-                                            setEditingAddressId(elem?._id);
-                                            setIsFormVisible(true);
-                                        }}>
-                                        Edit
-                                        <FiEdit2 className={styles.cardEventsIcon} />
-                                    </button>
-                                    <button
-                                        onClick={() => { handleDeleteAddress(elem?._id); }}
-                                        disabled={loadingDeleteButtonId === elem?._id}
-                                    >
-                                        {loadingDeleteButtonId === elem?._id ? 'Deleting' : 'Delete'}
-                                        <MdOutlineDeleteOutline className={styles.cardEventsIcon} />
-                                    </button>
+                    <div className={styles.addressesContainer}>
+                        <button
+                            className={styles.addNewAddressButton}
+                            onClick={() => {
+                                setIsFormVisible(true);
+                                setAddNewAddressCardVisible(true);
+                            }}
+                        >
+                            Add new address <FaPlus color='#555' />
+                        </button>
+                        <div className={styles.addressCardsHolder}>
+                            {addresses && addresses.map((elem, indx) => (
+                                <div className={styles.addressCard} key={indx}>
+                                    <p>{elem?.fullName}</p>
+                                    <p>{elem?.phone}</p>
+                                    <p>{elem?.alternatePhone}</p>
+                                    <p>{elem?.address}, {elem?.locality}, {elem?.district}, {elem?.state} - {elem?.pincode}</p>
+                                    <p>{elem?.country}</p>
+                                    <div className={styles.cardEvents}>
+                                        <button
+                                            onClick={() => {
+                                                setEditingAddressId(elem?._id);
+                                                setIsFormVisible(true);
+                                            }}>
+                                            Edit
+                                            <FiEdit2 className={styles.cardEventsIcon} />
+                                        </button>
+                                        <button
+                                            onClick={() => { handleDeleteAddress(elem?._id); }}
+                                            disabled={loadingDeleteButtonId === elem?._id}
+                                        >
+                                            {loadingDeleteButtonId === elem?._id ? 'Deleting' : 'Delete'}
+                                            <MdOutlineDeleteOutline className={styles.cardEventsIcon} />
+                                        </button>
+                                    </div>
                                 </div>
-                            </div>
 
-                        ))}
+                            ))}
+                        </div>
                     </div>
                 )}
 
@@ -436,7 +460,7 @@ function page() {
                                     onClick={() => { handleAddNewAddress(); }}
                                     disabled={isAddNewButtonLoading}
                                 >
-                                    {!isUpdateButtonLoading ? 'Save' : 'Saving...'}
+                                    {!isAddNewButtonLoading ? 'Save' : 'Saving...'}
                                 </button>
                             ) : (
                                 <button

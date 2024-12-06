@@ -11,6 +11,20 @@
 .mainHeader {
     font-size: 16px;
 }
+.addressesContainer {
+    margin-top: 40px;
+}
+.addNewAddressButton {
+    border: 1px solid rgb(190, 190, 190);
+    padding: 10px 25px;
+    font-weight: 550;
+    font-size: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+    color: rgb(55, 55, 55);
+}
 
 .addressCardsHolder {
     margin-top: 20px;
@@ -150,5 +164,8 @@
     .inputContainer>select,
     .inputContainer>textarea {
         max-width: 100%;
+    }
+    .inputContainer>select {
+        max-width: 280px;
     }
 }
