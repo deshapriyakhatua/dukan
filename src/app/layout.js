@@ -5,7 +5,6 @@ import Footer from "@/components/footer/Footer";
 import { Suspense } from "react";
 import { Toaster } from 'sonner';
 import { SessionProvider } from "next-auth/react"
-import connectToDatabase from "@/lib/mongoose";
 import OnUrlChange from "@/components/extra/OnUrlChange";
 
 const montserrat = Montserrat({
@@ -21,11 +20,18 @@ export const metadata = {
 
 export default async function RootLayout({ children }) {
 
-  // connect to database
-  // await connectToDatabase();
-
   return (
     <html lang="en">
+      <head>
+        <Script async src="https://www.googletagmanager.com/gtag/js?id=G-QHZ58DD9E5"></Script>
+        <Script id="google-analytics">
+          {`window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+
+          gtag('config', 'G-QHZ58DD9E5');`}
+        </Script>
+      </head>
       <SessionProvider>
         <body className={` ${montserrat.variable}`}>
           <Suspense fallback={null}>
