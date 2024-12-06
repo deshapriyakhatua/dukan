@@ -6,6 +6,7 @@ import { Suspense } from "react";
 import { Toaster } from 'sonner';
 import { SessionProvider } from "next-auth/react"
 import OnUrlChange from "@/components/extra/OnUrlChange";
+import Script from "next/script";
 
 const montserrat = Montserrat({
   subsets: ["cyrillic", "cyrillic-ext", "latin", "latin-ext", "vietnamese"],
