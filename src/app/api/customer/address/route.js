@@ -87,7 +87,7 @@ export async function POST(request) {
         }
         if (address.length <= 3) {
             return NextResponse.json(
-                { error: 'Address must contain atleast 3 letters' },
+                { error: 'Address must contain atleast 4 letters' },
                 { status: 400 }
             );
         }

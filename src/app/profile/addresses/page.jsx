@@ -19,12 +19,12 @@ const getAddresses = async () => {
             // Extract and throw server-provided error message if available
             const errorData = await res.json();
             console.log(errorData)
-            throw new Error(errorData.error || 'Failed to fetch product');
+            throw new Error(errorData.error || 'Failed to fetch addresses');
         }
 
         return await res.json();
     } catch (error) {
-        console.error(`Error fetching products:`, error.message);
+        console.error(`Error fetching addresses:`, error.message);
         throw new Error(error.message);
     }
 }
@@ -258,7 +258,7 @@ function page() {
                 return;
             }
             if (address.length <= 3) {
-                toast.warning('Address must contain atleast 3 letters');
+                toast.warning('Address must contain atleast 4 letters');
                 return;
             }
             if (district.length <= 2) {

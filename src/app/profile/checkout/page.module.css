@@ -28,6 +28,70 @@
     padding-left: 30px;
 }
 
+.addressesContainer>h3 {
+    margin-top: 30px;
+}
+.addNewAddressButton {
+    border: 1px solid rgb(190, 190, 190);
+    padding: 10px 25px;
+    font-weight: 550;
+    font-size: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+    color: rgb(55, 55, 55);
+}
+
+.addressCardsHolder {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.addressCard {
+    position: relative;
+    border: 1px solid rgb(223, 223, 223);
+    padding: 15px 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.addressCard>p:nth-child(1) {
+    font-weight: 450;
+
+}
+
+.cardEvents {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+}
+.cardEvents>input {
+    width: 20px;
+    height: 20px;
+}
+
+.addressForm {
+    display: flex;
+    flex-direction: column;
+    justify-content: stretch;
+    align-items: flex-start;
+    gap: 30px;
+}
+.selectFromSavedButton {
+    border: 1px solid rgb(190, 190, 190);
+    padding: 10px 25px;
+    font-weight: 550;
+    font-size: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+    color: rgb(55, 55, 55);
+}
 .address,
 .contact,
 .payment {
@@ -71,20 +135,14 @@
     border: 1px solid rgb(194, 194, 194);
     font-weight: 500;
 }
-
-.checkboxContainer {
+.payment>div {
     display: flex;
-    gap: 10px;
+    gap: 15px;
 }
-
-.checkboxContainer>input {
+#cashOnDelivery {
     width: 20px;
+    height: 20px;
 }
-
-.checkboxContainer>label {
-    font-weight: 500;
-}
-
 .payNow {
     background-color: var(--button-background);
     padding: 10px 20px;
@@ -234,5 +292,8 @@
     .inputContainer>select,
     .inputContainer>textarea {
         max-width: 100%;
+    }
+    .inputContainer>select {
+        max-width: 280px;
     }
 }
