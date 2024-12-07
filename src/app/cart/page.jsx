@@ -11,7 +11,7 @@ import Loading from '@/app/loading';
 
 const fetchCart = async function () {
     try {
-        const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/cart`, {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/customer/cart`, {
             cache: 'no-store'
         });
 
@@ -29,8 +29,8 @@ const fetchCart = async function () {
 
 const updateProductQuantity = async function (productId, action) {
     try {
-        const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/cart/updateQuantity`, {
-            method: 'POST',
+        const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/customer/cart`, {
+            method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
             },
@@ -51,8 +51,8 @@ const updateProductQuantity = async function (productId, action) {
 
 const removeProduct = async function (productId) {
     try {
-        const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/cart/remove`, {
-            method: 'POST',
+        const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/customer/cart`, {
+            method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json',
             },

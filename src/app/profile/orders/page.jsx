@@ -13,7 +13,7 @@ import Loading from '@/app/loading';
 const fetchOrder = async function () {
     try {
 
-        const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/order`, {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/customer/order`, {
             cache: 'no-store'
         });
 

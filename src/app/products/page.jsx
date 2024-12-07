@@ -10,7 +10,7 @@ import { useRouter, useSearchParams } from 'next/navigation';
 const fetchProducts = async function (category, subCategory, page, limit) {
     try {
 
-        const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/products/?category=${category}&sub-category=${subCategory}&page=${page}&limit=${limit}`, {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/public/products/?category=${category}&sub-category=${subCategory}&page=${page}&limit=${limit}`, {
             cache: 'no-store'
         });
 

@@ -14,7 +14,7 @@ import { FaPlus } from 'react-icons/fa';
 const getCartItems = async function () {
     try {
 
-        const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/cart`, {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/customer/cart`, {
             cache: 'no-store'
         });
 
@@ -52,7 +52,7 @@ const getAddresses = async () => {
 
 const placeOrder = async (orderData) => {
     try {
-        const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/order/new`, {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/customer/order`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

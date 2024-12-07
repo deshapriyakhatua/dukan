@@ -4,7 +4,7 @@ import ProductContent from '@/components/product/productContent/ProductContent';
 
 async function fetchProduct(id) {
     try {
-        const res = await fetch(`${process.env.BACKEND_URL}/api/product/${id}`, {
+        const res = await fetch(`${process.env.BACKEND_URL}/api/public/product/${id}`, {
             cache: 'no-store'
         });
 
@@ -55,7 +55,7 @@ async function Product({ params }) {
                 <div className={styles.card}>
 
                     {/* card left  */}
-                    <ProductImages 
+                    <ProductImages
                         images={product?.images}
                         name={product?.name}
                     />
@@ -71,11 +71,13 @@ async function Product({ params }) {
     } catch (error) {
         // Render fallback UI with a helpful error message
         return (
-            <div className={styles.errorContainer}>
-                <h1>Oops! Something went wrong.</h1>
-                <p>We couldn't load the requested product at this time.</p>
-                <p>Error: {error.message}</p>
-                <p>Please try again later or contact support if the problem persists.</p>
+            <div className={styles.mainPage}>
+                <div className={styles.errorContainer}>
+                    <h1>Oops! Something went wrong.</h1>
+                    <p>We couldn't load the requested product at this time.</p>
+                    <p><b>Error : </b> {error.message}</p>
+                    <p>Please try again later or contact support if the problem persists.</p>
+                </div>
             </div>
         );
     }

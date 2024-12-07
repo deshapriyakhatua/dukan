@@ -14,7 +14,7 @@ import Loading from '../loading';
 import Link from 'next/link';
 
 function page() {
-    
+
     const { data: session, status, update } = useSession();
     const router = useRouter();
     const [isSignOutLoading, setIsSignOutLoading] = useState(false);
@@ -29,41 +29,41 @@ function page() {
             console.log(error)
             toast.error(error.message)
         }
-      }
+    }
 
-    if(status === 'loading')  return <Loading />; 
-    if(status === 'unauthenticated') redirect("/auth/signin"); 
+    if (status === 'loading') return <Loading />;
+    if (status === 'unauthenticated') redirect("/auth/signin");
 
     return (
         <div className={styles.mainPage}>
             <div className={styles.mainContainer}>
                 <div className={styles.firstSection}>
-                    <div className={styles.card} onClick={()=>{ router.push('/profile/orders'); }}>
+                    <Link className={styles.card} href='/profile/orders'>
                         <div className={styles.imgContainer}><BsBoxFill size={35} /></div>
                         <div className={styles.content}>
                             <h3>Your Orders</h3>
                             <p>Track, return or buy things again</p>
                         </div>
-                    </div>
-                    <div className={styles.card}>
+                    </Link>
+                    <Link className={styles.card} href='/profile'>
                         <div className={styles.imgContainer}><FaUserCog size={35} /></div>
                         <div className={styles.content}>
                             <h3>Login & Security</h3>
                             <p>Edit login, name & and mobile no</p>
                         </div>
-                    </div>
-                    <div className={styles.card}>
+                    </Link>
+                    <Link className={styles.card} href='/cart'>
                         <div className={styles.imgContainer}><FaCreditCard size={35} /></div>
                         <div className={styles.content}>
-                            <h3>Prime</h3>
-                            <p>View benifits and payment settings</p>
+                            <h3>Cart</h3>
+                            <p>View cart and checkout</p>
                         </div>
-                    </div>
-                    <Link href="/orders" className={styles.card}>
+                    </Link>
+                    <Link className={styles.card} href="/profil/addresses">
                         <div className={styles.imgContainer}><MdContactSupport size={35} /></div>
                         <div className={styles.content}>
-                            <h3>Your Orders</h3>
-                            <p>Track, return or buy things agin</p>
+                            <h3>Saved Addresses</h3>
+                            <p>Add, Edit and delete addresses</p>
                         </div>
                     </Link>
                 </div>
@@ -86,10 +86,10 @@ function page() {
                 </div>
 
                 <div className={styles.lastSection}>
-                    <button className={styles.logoutButton} 
-                     onClick={handleSignOut}>
-                        { !isSignOutLoading ?'Sign out' :'Signing out...' }
-                      </button>
+                    <button className={styles.logoutButton}
+                        onClick={handleSignOut}>
+                        {!isSignOutLoading ? 'Sign out' : 'Signing out...'}
+                    </button>
                 </div>
 
             </div>

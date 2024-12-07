@@ -26,7 +26,7 @@ function ProductContent({ product }) {
         }
 
         try {
-            const response = await fetch('/api/cart/add', {
+            const response = await fetch('/api/customer/cart', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
